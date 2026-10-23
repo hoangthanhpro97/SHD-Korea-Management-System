@@ -1,0 +1,48 @@
+{
+  "students": [
+    {
+      "studentId": "stu_demo_01",
+      "studentCode": "DEMO2026-001",
+      "fullName": "Học viên Demo A",
+      "learningStatus": "STUDYING_KOREAN"
+    }
+  ],
+  "cases": [
+    {
+      "caseId": "case_demo_01",
+      "studentId": "stu_demo_01",
+      "periodId": "period_demo_2026_12",
+      "ownerUserId": "user_demo_hs01",
+      "stageCode": "ST03",
+      "status": "ACTIVE"
+    }
+  ],
+  "schoolApplications": [
+    {
+      "applicationId": "app_demo_01",
+      "caseId": "case_demo_01",
+      "schoolId": "school_demo_a",
+      "status": "HANDOVER_TO_EXTERNAL"
+    }
+  ],
+  "applicationEvents": [
+    {
+      "id": "ev_demo_01",
+      "applicationId": "app_demo_01",
+      "type": "INTERNAL_HANDOVER",
+      "recordedAt": "2026-10-01T08:00:00+07:00",
+      "evidenceId": "evidence_demo_01"
+    }
+  ],
+  "tasks": [
+    {
+      "taskId": "task_demo_01",
+      "caseId": "case_demo_01",
+      "title": "Đối chiếu biên nhận trường",
+      "status": "IN_PROGRESS",
+      "assigneeId": "user_demo_hs01",
+      "dueAt": "2026-10-24T17:00:00+07:00"
+    }
+  ],
+  "note": "DỮ LIỆU 100% GIẢ LẬP; không có file, email hay thông tin cá nhân thật."
+}

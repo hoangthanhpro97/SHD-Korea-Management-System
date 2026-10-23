@@ -1,0 +1,21 @@
+﻿Nguồn/sheet,Cột nguồn,Collection mục tiêu,Field,Quy tắc nhập,Căn cứ
+DS học viên,Mã HV,students,studentCode,string; unique after dedup,SOP01 p6
+DS học viên,Họ tên,students,fullName,sensitive,SOP01 p6
+DS học viên,Ngày sinh,students,dateOfBirth,ISO date validation,SOP01 p6
+DS học viên,Trường,school_applications,schoolId,normalize school alias,SOP01 p10
+DS học viên,Kỳ bay,cases,intakePeriodId,period/year validation,SOP01 p5
+DS học viên,Nhân viên xử lý,case_assignments,assigneeUserId,match user roster,SOP01 p4
+DS học viên,Trạng thái,learning_enrollments,learningStatus,separate from case stage,XLS_HS
+Hồ sơ chi tiết,Danh mục hồ sơ,documents,docTypeId,map aliases,SOP01 appendix
+Hồ sơ chi tiết,Ngày nhận hồ sơ,case_events,receivedAt,convert spreadsheet serial,SOP01 p6
+Hồ sơ chi tiết,File scan đính kèm,document_assets,driveFileId,URL may be folder not file,SOP01 p20
+Hồ sơ chi tiết,Ngày dịch,case_events,translatedAt,review as evidence,SOP01 p8
+Hồ sơ chi tiết,Ngày đăng ký xin tem,case_events,certificationEventAt,per document copy,SOP01 p9
+Checklist,Đã nộp,document_submissions,submittedAtOrStatus,not equivalent to approved,SOP01 PL1A
+Invoice & Thanh toán,Invoice số,invoices,externalInvoiceNumber,not unique across school; composite key,XLS_HS
+Invoice & Thanh toán,Số tiền (KRW),invoices,amountKRW,decimal/currency precision,XLS_HS
+Invoice & Thanh toán,Ngày chuyển tiền,payments,paidAt,requires proof,XLS_HS
+Báo cáo NV,Mục công việc,tasks,title,separate case and non-case tasks,XLS_NV
+Báo cáo NV,Tình trạng/Kết quả,task_updates,result,source provenance,XLS_NV
+Báo cáo TP,"Khó khăn, đề xuất",issues,description,link task/case when possible,XLS_TP
+Báo cáo TP,Kế hoạch tháng sau,tasks,plannedStart,future not completed,XLS_TP

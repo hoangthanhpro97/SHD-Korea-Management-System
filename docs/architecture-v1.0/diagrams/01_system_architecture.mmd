@@ -1,0 +1,11 @@
+flowchart TB
+ U[Nhân viên / Trưởng phòng / Đối ngoại] --> WEB[Web app React + TypeScript]
+ WEB --> AUTH[Authentication + authorization]
+ AUTH --> API[Backend kiểm tra nghiệp vụ]
+ API --> DB[(Firestore candidate)]
+ API --> AUDIT[Audit & report snapshots]
+ API --> FILES[Google Drive / Shared Drive]
+ API --> MAIL[Gmail / Calendar API]
+ API --> REPORT[Report generation]
+ REPORT --> SHEETS[Google Sheets / Docs Export]
+ REPORT -. Tóm tắt có phê duyệt .-> AI[Gemini API optional]

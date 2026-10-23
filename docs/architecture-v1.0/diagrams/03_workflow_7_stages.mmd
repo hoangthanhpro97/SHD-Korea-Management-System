@@ -1,0 +1,23 @@
+flowchart TD
+ A[ST01 Tiếp nhận và xử lý đầu vào] --> G1{Thông tin & nguồn tài chính hợp lệ?}
+ G1 -- Không --> B1[Yêu cầu bổ sung / chờ]
+ B1 --> A
+ G1 -- Có; review --> B[ST02 Xử lý hồ sơ trường]
+ B --> G2{Kiểm tra chéo + giấy tờ đạt?}
+ G2 -- Không --> B2[Chỉnh sửa hợp pháp / bổ sung]
+ B2 --> B
+ G2 -- Có --> C[ST03 Nộp hồ sơ trường]
+ C --> H[Bàn giao Đối ngoại]
+ H --> S[Gửi đến trường]
+ S --> R{Trường xác nhận nhận?}
+ R -- Chưa --> W[Theo dõi chứng cứ / phản hồi]
+ W --> R
+ R -- Có --> D[ST04 Phỏng vấn trường]
+ D --> I{Kết quả phỏng vấn}
+ I -- Phỏng vấn lại / chuyển trường --> C
+ I -- Đạt --> E[ST05 Xử lý hồ sơ lãnh sự]
+ E --> F[ST06 Nộp visa & theo dõi]
+ F --> V{Visa kết quả}
+ V -- Bổ sung / chờ --> F
+ V -- Được cấp --> X[ST07 Xuất cảnh, bàn giao, xác nhận đến trường]
+ X --> Z[Case hoàn thành theo điều kiện duyệt]

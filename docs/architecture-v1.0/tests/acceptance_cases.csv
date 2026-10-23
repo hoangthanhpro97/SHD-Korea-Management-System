@@ -1,0 +1,19 @@
+id,priority,name
+AC01,P0,Chỉ staff được giao đọc case
+AC02,P0,Không lộ case khi đoán ID
+AC03,P0,Chặn stage 1 thiếu xác nhận tài chính
+AC04,P0,Chặn tự duyệt kiểm tra chéo
+AC05,P0,Reviewer độc lập có audit
+AC06,P0,Bàn giao không tính gửi trường
+AC07,P0,Gửi trường không tính nhận trường
+AC08,P0,Biên nhận tăng đúng KPI
+AC09,P0,Giấy tờ hết hạn chặn stage
+AC10,P0,Rút hồ sơ không xóa bằng chứng
+AC11,P0,Snapshot đã chốt bất biến
+AC12,P1,Việc kế hoạch không tính hoàn thành
+AC13,P1,Import lỗi bị cách ly
+AC14,P1,Hai application 1 student không đếm trùng
+AC15,P1,Không lộ secret qua frontend
+AC16,P1,Báo cáo nguồn tranh chấp bị đánh dấu
+AC17,P1,Alert đúng người và chống spam
+AC18,P1,Tech admin không mặc nhiên xem PII

@@ -1,0 +1,20 @@
+erDiagram
+ STUDENTS ||--o{ CASES : has
+ INTAKE_PERIODS ||--o{ CASES : schedules
+ USERS ||--o{ CASE_ASSIGNMENTS : assigned
+ CASES ||--o{ CASE_ASSIGNMENTS : has
+ CASES ||--o{ SCHOOL_APPLICATIONS : submits
+ SCHOOLS ||--o{ SCHOOL_APPLICATIONS : receives
+ SCHOOL_APPLICATIONS ||--o{ APPLICATION_EVENTS : records
+ CASES ||--o{ DOCUMENTS : collects
+ DOCUMENT_TYPES ||--o{ DOCUMENTS : categorizes
+ DOCUMENTS ||--o{ DOCUMENT_ASSETS : versions
+ DOCUMENTS ||--o{ DOCUMENT_REVIEWS : reviewed
+ CASES ||--o{ CASE_STAGES : advances
+ CASE_STAGES ||--o{ STAGE_REVIEWS : approved
+ CASES ||--o{ TASKS : may_have
+ TASKS ||--o{ TASK_UPDATES : tracks
+ CASES ||--o{ CASE_EVENTS : logs
+ SCHOOL_APPLICATIONS ||--o{ INVOICES : billed
+ INVOICES ||--o{ PAYMENTS : settles
+ REPORTS ||--o{ REPORT_SNAPSHOTS : locks
