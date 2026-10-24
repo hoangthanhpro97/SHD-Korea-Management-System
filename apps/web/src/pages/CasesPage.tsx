@@ -25,6 +25,14 @@ export default function CasesPage() {
   const initialPeriodId = searchParams.get('periodId') || INTAKE_PERIODS_DATA[0].periodId
   const [selectedPeriodId, setSelectedPeriodId] = useState<string>(initialPeriodId)
 
+  // Lightbox phóng to ảnh thẻ 3x4 hoặc ảnh phụ huynh
+  const [lightboxPhoto, setLightboxPhoto] = useState<{
+    url: string
+    title: string
+    subtitle?: string
+    is3x4?: boolean
+  } | null>(null)
+
   // Chế độ mô phỏng nhóm 40 học viên theo yêu cầu
   const [useSimulatedCohort, setUseSimulatedCohort] = useState<boolean>(true)
 
@@ -374,25 +382,14 @@ export default function CasesPage() {
                     : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
-                <div className="flex items-start justify-between gap-1.5">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <PhotoAvatar
-                      src={student.photoUrl}
-                      alt={student.studentName}
-                      aspectRatio="3:4"
-                      size="xs"
-                      rounded="sm"
-                      fallbackType="student"
-                      className="border border-slate-200 shrink-0"
-                    />
-                    <div className="min-w-0">
-                      <span className="font-mono text-[10px] font-bold text-[#033399] bg-white px-1.5 py-0.2 rounded border border-blue-200 block truncate">
-                        {student.studentCode}
-                      </span>
-                      <h4 className="text-xs font-bold text-slate-900 mt-0.5 truncate">
-                        {student.studentName}
-                      </h4>
-                    </div>
+                <div className="flex items-start justify-between">
+                  <div className="truncate">
+                    <span className="font-mono text-[10px] font-bold text-[#033399] bg-white px-1.5 py-0.2 rounded border border-blue-200">
+                      {student.studentCode}
+                    </span>
+                    <h4 className="text-xs font-bold text-slate-900 mt-1 truncate">
+                      {student.studentName}
+                    </h4>
                   </div>
 
                   {isBlocked ? (
@@ -456,16 +453,36 @@ export default function CasesPage() {
       <section className="rounded-2xl border-2 border-slate-200 bg-white p-5 shadow-xs space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div className="flex items-center gap-3.5">
-            <PhotoAvatar
-              src={currentCase.photoUrl}
-              alt={currentCase.studentName}
-              aspectRatio="3:4"
-              size="lg"
-              show3x4Badge
-              rounded="md"
-              fallbackType="student"
-              className="border-2 border-white shadow-md ring-1 ring-slate-200 shrink-0"
-            />
+            {/* Ảnh thẻ 3x4 có thể bấm phóng to xem kích thước đầy đủ */}
+            <button
+              type="button"
+              onClick={() =>
+                currentCase.photoUrl &&
+                setLightboxPhoto({
+                  url: currentCase.photoUrl,
+                  title: `Ảnh thẻ 3×4: ${currentCase.studentName}`,
+                  subtitle: `Mã HV: ${currentCase.studentCode} • ${currentCase.intakeName}`,
+                  is3x4: true,
+                })
+              }
+              className="group relative cursor-pointer focus:outline-hidden"
+              title="Bấm vào ảnh thẻ để xem kích thước đầy đủ"
+            >
+              <PhotoAvatar
+                src={currentCase.photoUrl}
+                alt={currentCase.studentName}
+                aspectRatio="3:4"
+                size="lg"
+                show3x4Badge
+                rounded="md"
+                fallbackType="student"
+                className="border-2 border-white shadow-md ring-1 ring-slate-200 group-hover:ring-2 group-hover:ring-[#033399] transition-all shrink-0"
+              />
+              <span className="absolute inset-0 flex items-center justify-center bg-black/35 rounded-md opacity-0 group-hover:opacity-100 transition-opacity text-white text-[10px] font-bold">
+                🔍 Xem lớn
+              </span>
+            </button>
+
             <div>
               <div className="flex items-center gap-2">
                 <span className="rounded-md bg-slate-100 px-2 py-0.5 font-mono text-xs font-bold text-slate-700">
@@ -477,8 +494,8 @@ export default function CasesPage() {
                 <span className="rounded-md bg-indigo-50 px-2 py-0.5 text-xs font-bold text-[#033399] border border-indigo-200">
                   {currentCase.intakeName}
                 </span>
-                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-600 border border-slate-200">
-                  Ảnh thẻ 3×4
+                <span className="rounded-md bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-[#033399] border border-indigo-200">
+                  Ảnh thẻ 3×4 (Bấm xem lớn)
                 </span>
               </div>
               <p className="mt-1 text-xs text-slate-600">
@@ -546,15 +563,35 @@ export default function CasesPage() {
                   key={p.parentId}
                   className="rounded-lg bg-white p-3 border border-slate-200 shadow-2xs flex items-start gap-3 text-xs"
                 >
-                  <PhotoAvatar
-                    src={p.photoUrl}
-                    alt={p.fullName}
-                    aspectRatio="1:1"
-                    size="md"
-                    rounded="lg"
-                    fallbackType={p.relationship === 'BO' ? 'father' : 'mother'}
-                    className="border border-slate-200 shadow-2xs shrink-0 mt-0.5"
-                  />
+                  {/* Ảnh phụ huynh có thể bấm phóng to */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      p.photoUrl &&
+                      setLightboxPhoto({
+                        url: p.photoUrl,
+                        title: `Ảnh phụ huynh: ${p.fullName} (${p.relationLabel})`,
+                        subtitle: `Phụ huynh học viên: ${currentCase.studentName} (${currentCase.studentCode})`,
+                        is3x4: false,
+                      })
+                    }
+                    className="group relative cursor-pointer focus:outline-hidden shrink-0 mt-0.5"
+                    title="Bấm để xem ảnh phụ huynh kích thước đầy đủ"
+                  >
+                    <PhotoAvatar
+                      src={p.photoUrl}
+                      alt={p.fullName}
+                      aspectRatio="1:1"
+                      size="md"
+                      rounded="lg"
+                      fallbackType={p.relationship === 'BO' ? 'father' : 'mother'}
+                      className="border border-slate-200 shadow-2xs group-hover:ring-2 group-hover:ring-[#033399] transition-all"
+                    />
+                    <span className="absolute inset-0 flex items-center justify-center bg-black/35 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity text-white text-[10px] font-bold">
+                      🔍
+                    </span>
+                  </button>
+
                   <div className="flex-1 min-w-0 space-y-1">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
@@ -638,6 +675,61 @@ export default function CasesPage() {
           onToggleStatus={handleToggleDocStatus}
         />
       </section>
+
+      {/* ======================================================== */}
+      {/* LIGHTBOX PHÓNG TO ẢNH THẺ 3X4 & ẢNH PHỤ HUYNH            */}
+      {/* ======================================================== */}
+      {lightboxPhoto && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setLightboxPhoto(null)}
+          className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm cursor-zoom-out"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-md w-full bg-white rounded-2xl overflow-hidden shadow-2xl p-4 cursor-default space-y-3"
+          >
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+              <div>
+                <h4 className="font-bold text-slate-900 text-sm">{lightboxPhoto.title}</h4>
+                {lightboxPhoto.subtitle && (
+                  <p className="text-xs text-slate-500">{lightboxPhoto.subtitle}</p>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => setLightboxPhoto(null)}
+                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="flex items-center justify-center bg-slate-100 rounded-xl p-3 overflow-hidden border border-slate-200">
+              <img
+                src={lightboxPhoto.url}
+                alt={lightboxPhoto.title}
+                className={`max-h-[65vh] object-contain rounded-lg shadow-md ${
+                  lightboxPhoto.is3x4 ? 'aspect-[3/4] w-auto h-auto max-w-[280px]' : 'max-w-[280px] rounded-xl'
+                }`}
+              />
+            </div>
+
+            {lightboxPhoto.is3x4 ? (
+              <div className="flex items-center justify-between text-[11px] text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                <span>📷 Ảnh thẻ chuẩn nộp hồ sơ visa (Tỷ lệ 3×4 cm)</span>
+                <span className="font-mono font-bold text-[#033399]">300 DPI</span>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between text-[11px] text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                <span>👤 Ảnh chân dung người bảo lãnh tài chính</span>
+                <span className="font-mono font-bold text-emerald-700">Đã xác minh</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

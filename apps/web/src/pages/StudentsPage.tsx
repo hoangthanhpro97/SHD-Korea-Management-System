@@ -13,6 +13,13 @@ export default function StudentsPage() {
   const [topikFilter, setTopikFilter] = useState('ALL')
   const [parentRoleFilter, setParentRoleFilter] = useState<'ALL' | 'BO' | 'ME' | 'SPONSOR'>('ALL')
   const [selectedStudent, setSelectedStudent] = useState<CaseByIntake | null>(null)
+  const [selectedParentRow, setSelectedParentRow] = useState<{ student: CaseByIntake; parent: ParentInfo } | null>(null)
+  const [lightboxPhoto, setLightboxPhoto] = useState<{
+    url: string
+    title: string
+    subtitle?: string
+    is3x4?: boolean
+  } | null>(null)
   const [copiedPhone, setCopiedPhone] = useState<string | null>(null)
 
   const handleCopyPhone = (phone: string) => {
@@ -109,7 +116,7 @@ export default function StudentsPage() {
             Quản lý Học viên & Phụ huynh
           </h1>
           <p className="mt-1 text-sm text-slate-500">
-            Theo dõi song song: Tiến độ hồ sơ du học, ảnh thẻ 3x4, đào tạo tiếng Hàn, và hồ sơ phụ huynh bảo lãnh
+            Theo dõi song song: Quy trình xử lý hồ sơ (7 mốc tuần), đào tạo tiếng Hàn, và hồ sơ phụ huynh bảo lãnh
           </p>
         </div>
         <DemoBadge />
@@ -268,13 +275,13 @@ export default function StudentsPage() {
             </div>
           </div>
 
-          {/* Table: Danh sách Học viên */}
+          {/* Table: Danh sách Học viên (Không hiển thị ảnh thẻ ở danh sách chính, bấm tên HV để xem chi tiết kèm ảnh thẻ 3x4) */}
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xs">
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[980px]">
+              <table className="w-full text-left border-collapse min-w-[950px]">
                 <thead>
                   <tr className="border-b border-slate-200 bg-slate-50/75 text-[11px] font-bold text-slate-600 uppercase tracking-wider">
-                    <th className="py-3 px-3">Học viên (Ảnh thẻ 3x4)</th>
+                    <th className="py-3 px-3">Học viên</th>
                     <th className="py-3 px-3">Kỳ bay & Nguyện vọng</th>
                     <th className="py-3 px-3">Tiến độ hồ sơ</th>
                     <th className="py-3 px-3">Đang học tiếng</th>
@@ -300,37 +307,24 @@ export default function StudentsPage() {
                           key={s.caseId}
                           className="hover:bg-slate-50/80 transition-colors"
                         >
-                          {/* Cột 1: Thông tin học viên (Ảnh thẻ 3x4 + Tên ở Hàng 1, Mã ở Hàng 2, SĐT ở Hàng 3) */}
+                          {/* Cột 1: Thông tin học viên (Hàng 1: Tên, Hàng 2: Mã, Hàng 3: SĐT - Bấm tên xem chi tiết & ảnh thẻ) */}
                           <td className="py-3 px-3">
-                            <div className="flex items-center gap-2.5">
-                              {/* Ảnh thẻ 3x4 */}
-                              <PhotoAvatar
-                                src={s.photoUrl}
-                                alt={s.studentName}
-                                aspectRatio="3:4"
-                                size="sm"
-                                show3x4Badge
-                                rounded="md"
-                                fallbackType="student"
-                                className="border border-slate-300 shadow-2xs shrink-0"
-                              />
-
-                              <div className="space-y-0.5">
-                                <button
-                                  type="button"
-                                  onClick={() => setSelectedStudent(s)}
-                                  className="font-bold text-slate-900 text-xs text-left hover:text-[#033399] transition-colors cursor-pointer"
-                                  title="Xem phiếu thông tin đào tạo & phụ huynh"
-                                >
-                                  {s.studentName}
-                                </button>
-                                <p className="font-mono text-[11px] font-bold text-[#033399]">
-                                  {s.studentCode}
-                                </p>
-                                <p className="text-[11px] text-slate-500">
-                                  {s.phone}
-                                </p>
-                              </div>
+                            <div className="space-y-0.5">
+                              <button
+                                type="button"
+                                onClick={() => setSelectedStudent(s)}
+                                className="font-bold text-slate-900 text-xs text-left hover:text-[#033399] transition-colors cursor-pointer group flex items-center gap-1.5"
+                                title="Bấm để xem hồ sơ chi tiết & ảnh thẻ 3x4"
+                              >
+                                <span className="group-hover:underline underline-offset-2">{s.studentName}</span>
+                                <span className="text-[10px] text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">ℹ️</span>
+                              </button>
+                              <p className="font-mono text-[11px] font-bold text-[#033399]">
+                                {s.studentCode}
+                              </p>
+                              <p className="text-[11px] text-slate-500">
+                                {s.phone}
+                              </p>
                             </div>
                           </td>
 
@@ -581,7 +575,7 @@ export default function StudentsPage() {
             </div>
           </div>
 
-          {/* Table: Danh sách Phụ huynh */}
+          {/* Table: Danh sách Phụ huynh (Không hiển thị ảnh ở danh sách chính, bấm tên phụ huynh để mở modal chi tiết kèm ảnh) */}
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xs">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[1050px]">
@@ -609,63 +603,49 @@ export default function StudentsPage() {
                         key={`${student.caseId}_${parent.parentId}`}
                         className="hover:bg-slate-50/80 transition-colors"
                       >
-                        {/* Cột 1: Thông tin học viên (kèm ảnh thẻ 3x4 nhỏ) */}
+                        {/* Cột 1: Thông tin học viên */}
                         <td className="py-3 px-3">
-                          <div className="flex items-center gap-2">
-                            <PhotoAvatar
-                              src={student.photoUrl}
-                              alt={student.studentName}
-                              aspectRatio="3:4"
-                              size="xs"
-                              rounded="sm"
-                              fallbackType="student"
-                              className="border border-slate-200 shrink-0"
-                            />
-                            <div className="space-y-0.5">
-                              <Link
-                                to={`/cases?periodId=${student.periodId}&caseId=${student.caseId}`}
-                                className="font-bold text-slate-900 text-xs hover:text-[#033399] transition-colors"
-                                title="Bấm để mở hồ sơ học viên này"
-                              >
-                                {student.studentName}
-                              </Link>
-                              <p className="font-mono text-[11px] font-bold text-[#033399]">
-                                {student.studentCode}
-                              </p>
-                              <span className="inline-block rounded bg-indigo-50 px-1.5 py-0.2 text-[10px] font-semibold text-[#033399] border border-indigo-200">
-                                {student.intakeName}
-                              </span>
-                            </div>
+                          <div className="space-y-0.5">
+                            <Link
+                              to={`/cases?periodId=${student.periodId}&caseId=${student.caseId}`}
+                              className="font-bold text-slate-900 text-xs hover:text-[#033399] transition-colors"
+                              title="Bấm để mở hồ sơ học viên này"
+                            >
+                              {student.studentName}
+                            </Link>
+                            <p className="font-mono text-[11px] font-bold text-[#033399]">
+                              {student.studentCode}
+                            </p>
+                            <span className="inline-block rounded bg-indigo-50 px-1.5 py-0.2 text-[10px] font-semibold text-[#033399] border border-indigo-200">
+                              {student.intakeName}
+                            </span>
                           </div>
                         </td>
 
-                        {/* Cột 2: Phụ huynh & Vai trò (kèm ảnh chân dung phụ huynh) */}
+                        {/* Cột 2: Phụ huynh & Vai trò (Bấm tên phụ huynh để mở modal chi tiết kèm ảnh) */}
                         <td className="py-3 px-3">
-                          <div className="flex items-center gap-2.5">
-                            <PhotoAvatar
-                              src={parent.photoUrl}
-                              alt={parent.fullName}
-                              aspectRatio="1:1"
-                              size="sm"
-                              rounded="lg"
-                              fallbackType={parent.relationship === 'BO' ? 'father' : 'mother'}
-                              className="border border-slate-300 shadow-2xs shrink-0"
-                            />
-                            <div>
-                              <p className="font-bold text-slate-900 text-xs">
+                          <button
+                            type="button"
+                            onClick={() => setSelectedParentRow({ student, parent })}
+                            className="text-left group cursor-pointer"
+                            title="Bấm để xem hồ sơ chi tiết & ảnh phụ huynh"
+                          >
+                            <div className="flex items-center gap-1.5">
+                              <p className="font-bold text-slate-900 text-xs group-hover:text-[#033399] group-hover:underline transition-colors">
                                 {parent.fullName}
                               </p>
-                              <span
-                                className={`inline-block rounded px-1.5 py-0.2 text-[10px] font-bold mt-0.5 ${
-                                  parent.relationship === 'BO'
-                                    ? 'bg-blue-50 text-blue-800 border border-blue-200'
-                                    : 'bg-rose-50 text-rose-800 border border-rose-200'
-                                }`}
-                              >
-                                {parent.relationLabel}
-                              </span>
+                              <span className="text-[10px] text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">ℹ️</span>
                             </div>
-                          </div>
+                            <span
+                              className={`inline-block rounded px-1.5 py-0.2 text-[10px] font-bold mt-0.5 ${
+                                parent.relationship === 'BO'
+                                  ? 'bg-blue-50 text-blue-800 border border-blue-200'
+                                  : 'bg-rose-50 text-rose-800 border border-rose-200'
+                              }`}
+                            >
+                              {parent.relationLabel}
+                            </span>
+                          </button>
                         </td>
 
                         {/* Cột 3: Số điện thoại */}
@@ -756,7 +736,9 @@ export default function StudentsPage() {
         </div>
       )}
 
-      {/* MODAL: PHIẾU ĐÁNH GIÁ ĐÀO TẠO & HỒ SƠ CHI TIẾT */}
+      {/* ======================================================== */}
+      {/* MODAL 1: CHI TIẾT HỌC VIÊN & ẢNH THẺ 3X4 (BẤM PHÓNG TO)   */}
+      {/* ======================================================== */}
       {selectedStudent && (
         <div
           role="dialog"
@@ -764,26 +746,46 @@ export default function StudentsPage() {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs"
         >
           <div className="max-w-2xl w-full rounded-2xl bg-white p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-            {/* Header Modal kèm Ảnh thẻ 3x4 của học viên */}
+            {/* Header Modal kèm Ảnh thẻ 3x4 có thể bấm phóng to */}
             <div className="flex items-start justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-3.5">
-                <PhotoAvatar
-                  src={selectedStudent.photoUrl}
-                  alt={selectedStudent.studentName}
-                  aspectRatio="3:4"
-                  size="lg"
-                  show3x4Badge
-                  rounded="md"
-                  fallbackType="student"
-                  className="border-2 border-white shadow-md ring-1 ring-slate-200 shrink-0"
-                />
+                {/* Ảnh thẻ 3x4 (Bấm để xem kích thước đầy đủ) */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    selectedStudent.photoUrl &&
+                    setLightboxPhoto({
+                      url: selectedStudent.photoUrl,
+                      title: `Ảnh thẻ 3×4: ${selectedStudent.studentName}`,
+                      subtitle: `Mã HV: ${selectedStudent.studentCode} • ${selectedStudent.intakeName}`,
+                      is3x4: true,
+                    })
+                  }
+                  className="group relative cursor-pointer focus:outline-hidden"
+                  title="Bấm vào ảnh thẻ để xem kích thước đầy đủ"
+                >
+                  <PhotoAvatar
+                    src={selectedStudent.photoUrl}
+                    alt={selectedStudent.studentName}
+                    aspectRatio="3:4"
+                    size="lg"
+                    show3x4Badge
+                    rounded="md"
+                    fallbackType="student"
+                    className="border-2 border-white shadow-md ring-1 ring-slate-200 group-hover:ring-2 group-hover:ring-[#033399] transition-all shrink-0"
+                  />
+                  <span className="absolute inset-0 flex items-center justify-center bg-black/35 rounded-md opacity-0 group-hover:opacity-100 transition-opacity text-white text-[10px] font-bold">
+                    🔍 Xem lớn
+                  </span>
+                </button>
+
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-mono text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
                       {selectedStudent.studentCode}
                     </span>
-                    <span className="rounded bg-slate-100 text-slate-600 px-1.5 py-0.2 text-[10px] font-bold">
-                      Ảnh thẻ 3x4
+                    <span className="rounded bg-indigo-50 text-[#033399] px-2 py-0.5 text-[10px] font-bold border border-indigo-200">
+                      Ảnh thẻ 3×4 (Bấm ảnh để phóng to)
                     </span>
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mt-1">
@@ -794,6 +796,7 @@ export default function StudentsPage() {
                   </p>
                 </div>
               </div>
+
               <button
                 type="button"
                 onClick={() => setSelectedStudent(null)}
@@ -877,12 +880,12 @@ export default function StudentsPage() {
               </div>
             </div>
 
-            {/* Chi tiết Phụ huynh & Người bảo lãnh (kèm ảnh phụ huynh) */}
+            {/* Chi tiết Phụ huynh & Người bảo lãnh (kèm ảnh phụ huynh bấm phóng to) */}
             {selectedStudent.parents && selectedStudent.parents.length > 0 && (
               <div className="space-y-2">
                 <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
                   <span>👨‍👩‍👧</span>
-                  <span>Thông tin Phụ huynh & Người bảo lãnh tài chính</span>
+                  <span>Thông tin Phụ huynh & Người bảo lãnh tài chính (Bấm ảnh để phóng to)</span>
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                   {selectedStudent.parents.map((p) => (
@@ -890,16 +893,35 @@ export default function StudentsPage() {
                       key={p.parentId}
                       className="rounded-xl border border-indigo-100 bg-indigo-50/40 p-3 flex items-start gap-3"
                     >
-                      {/* Ảnh phụ huynh */}
-                      <PhotoAvatar
-                        src={p.photoUrl}
-                        alt={p.fullName}
-                        aspectRatio="1:1"
-                        size="md"
-                        rounded="lg"
-                        fallbackType={p.relationship === 'BO' ? 'father' : 'mother'}
-                        className="border border-slate-200 shadow-2xs shrink-0 mt-0.5"
-                      />
+                      {/* Ảnh phụ huynh (Bấm phóng to) */}
+                      <button
+                        type="button"
+                        onClick={() =>
+                          p.photoUrl &&
+                          setLightboxPhoto({
+                            url: p.photoUrl,
+                            title: `Ảnh phụ huynh: ${p.fullName} (${p.relationLabel})`,
+                            subtitle: `Phụ huynh học viên: ${selectedStudent.studentName} (${selectedStudent.studentCode})`,
+                            is3x4: false,
+                          })
+                        }
+                        className="group relative cursor-pointer focus:outline-hidden shrink-0 mt-0.5"
+                        title="Bấm để xem ảnh phụ huynh kích thước đầy đủ"
+                      >
+                        <PhotoAvatar
+                          src={p.photoUrl}
+                          alt={p.fullName}
+                          aspectRatio="1:1"
+                          size="md"
+                          rounded="lg"
+                          fallbackType={p.relationship === 'BO' ? 'father' : 'mother'}
+                          className="border border-slate-200 shadow-2xs group-hover:ring-2 group-hover:ring-[#033399] transition-all"
+                        />
+                        <span className="absolute inset-0 flex items-center justify-center bg-black/35 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity text-white text-[10px] font-bold">
+                          🔍
+                        </span>
+                      </button>
+
                       <div className="flex-1 space-y-1">
                         <div className="flex items-center justify-between">
                           <strong className="text-slate-900 text-sm">{p.fullName}</strong>
@@ -981,6 +1003,226 @@ export default function StudentsPage() {
                 Chuyển sang Khung Hồ sơ 7 mốc tuần →
               </Link>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ======================================================== */}
+      {/* MODAL 2: CHI TIẾT PHỤ HUYNH & ẢNH PHỤ HUYNH (PHÓNG TO)    */}
+      {/* ======================================================== */}
+      {selectedParentRow && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs"
+        >
+          <div className="max-w-xl w-full rounded-2xl bg-white p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+            {/* Header Phụ huynh kèm Ảnh chân dung có thể phóng to */}
+            <div className="flex items-start justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-3.5">
+                {/* Ảnh phụ huynh (Bấm để xem kích thước đầy đủ) */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    selectedParentRow.parent.photoUrl &&
+                    setLightboxPhoto({
+                      url: selectedParentRow.parent.photoUrl,
+                      title: `Ảnh chân dung: ${selectedParentRow.parent.fullName} (${selectedParentRow.parent.relationLabel})`,
+                      subtitle: `Phụ huynh học viên: ${selectedParentRow.student.studentName} • ${selectedParentRow.student.studentCode}`,
+                      is3x4: false,
+                    })
+                  }
+                  className="group relative cursor-pointer focus:outline-hidden"
+                  title="Bấm vào ảnh phụ huynh để xem kích thước đầy đủ"
+                >
+                  <PhotoAvatar
+                    src={selectedParentRow.parent.photoUrl}
+                    alt={selectedParentRow.parent.fullName}
+                    aspectRatio="1:1"
+                    size="lg"
+                    rounded="lg"
+                    fallbackType={selectedParentRow.parent.relationship === 'BO' ? 'father' : 'mother'}
+                    className="border-2 border-white shadow-md ring-1 ring-slate-200 group-hover:ring-2 group-hover:ring-[#033399] transition-all shrink-0"
+                  />
+                  <span className="absolute inset-0 flex items-center justify-center bg-black/35 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-bold">
+                    🔍 Xem lớn
+                  </span>
+                </button>
+
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`rounded px-2 py-0.5 text-xs font-bold ${
+                        selectedParentRow.parent.relationship === 'BO'
+                          ? 'bg-blue-100 text-blue-800'
+                          : 'bg-rose-100 text-rose-800'
+                      }`}
+                    >
+                      {selectedParentRow.parent.relationLabel}
+                    </span>
+                    {selectedParentRow.parent.isFinancialSponsor && (
+                      <span className="rounded bg-emerald-100 text-emerald-800 px-2 py-0.5 text-[10px] font-bold">
+                        ⭐ Bảo trợ tài chính chính
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mt-1">
+                    {selectedParentRow.parent.fullName}
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Sinh năm {selectedParentRow.parent.yearOfBirth} • CCCD: {selectedParentRow.parent.idCard || 'Đang cập nhật'}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setSelectedParentRow(null)}
+                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Chi tiết liên hệ & nghề nghiệp */}
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-2.5 text-xs">
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-slate-600">Số điện thoại liên hệ:</span>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={`tel:${selectedParentRow.parent.phone.replace(/\s+/g, '')}`}
+                    className="font-mono font-bold text-sm text-[#033399] hover:underline"
+                  >
+                    {selectedParentRow.parent.phone}
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => handleCopyPhone(selectedParentRow.parent.phone)}
+                    className="rounded bg-white border border-slate-300 px-2 py-0.5 text-[10px] font-bold text-slate-700 hover:bg-slate-100 cursor-pointer"
+                  >
+                    {copiedPhone === selectedParentRow.parent.phone ? '✓ Đã chép' : 'Sao chép'}
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between border-t border-slate-200/60 pt-2">
+                <span className="font-semibold text-slate-600">Nghề nghiệp:</span>
+                <span className="font-bold text-slate-900">{selectedParentRow.parent.job}</span>
+              </div>
+
+              {selectedParentRow.parent.workplace && (
+                <div className="flex items-center justify-between border-t border-slate-200/60 pt-2">
+                  <span className="font-semibold text-slate-600">Nơi công tác / Doanh nghiệp:</span>
+                  <span className="font-medium text-slate-800">{selectedParentRow.parent.workplace}</span>
+                </div>
+              )}
+
+              <div className="flex items-center justify-between border-t border-slate-200/60 pt-2">
+                <span className="font-semibold text-slate-600">Địa chỉ thường trú:</span>
+                <span className="font-medium text-slate-800">{selectedParentRow.parent.address || 'Hải Dương / Hà Nội'}</span>
+              </div>
+
+              {selectedParentRow.parent.notes && (
+                <div className="border-t border-slate-200/60 pt-2">
+                  <span className="font-semibold text-slate-600 block mb-1">Ghi chú đôn đốc tiến độ:</span>
+                  <p className="bg-white p-2 rounded-lg border border-slate-200 text-slate-700 italic">
+                    {selectedParentRow.parent.notes}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Thẻ học viên được bảo lãnh */}
+            <div className="rounded-xl border border-indigo-200 bg-indigo-50/50 p-3.5 space-y-2 text-xs">
+              <span className="text-xs font-bold text-[#033399] flex items-center gap-1.5">
+                <span>👨‍🎓</span>
+                <span>Thông tin học viên được bảo lãnh:</span>
+              </span>
+              <div className="flex items-center justify-between bg-white p-2.5 rounded-lg border border-indigo-100">
+                <div>
+                  <h4 className="font-bold text-slate-900 text-sm">
+                    {selectedParentRow.student.studentName}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 font-mono">
+                    {selectedParentRow.student.studentCode} • {selectedParentRow.student.intakeName}
+                  </p>
+                  <p className="text-[11px] text-slate-600 mt-0.5">
+                    Mục tiêu: {selectedParentRow.student.targetSchool} ({selectedParentRow.student.targetMajor})
+                  </p>
+                </div>
+                <Link
+                  to={`/cases?periodId=${selectedParentRow.student.periodId}&caseId=${selectedParentRow.student.caseId}`}
+                  className="rounded-lg bg-[#033399] px-3 py-1.5 text-xs font-bold text-white hover:bg-blue-800 transition-colors shadow-2xs"
+                >
+                  Xem hồ sơ →
+                </Link>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 border-t border-slate-100 pt-3">
+              <button
+                type="button"
+                onClick={() => setSelectedParentRow(null)}
+                className="rounded-lg px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 cursor-pointer"
+              >
+                Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ======================================================== */}
+      {/* MODAL 3: LIGHTBOX PHÓNG TO ẢNH THẺ 3X4 & ẢNH PHỤ HUYNH   */}
+      {/* ======================================================== */}
+      {lightboxPhoto && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setLightboxPhoto(null)}
+          className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm cursor-zoom-out"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-md w-full bg-white rounded-2xl overflow-hidden shadow-2xl p-4 cursor-default space-y-3"
+          >
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+              <div>
+                <h4 className="font-bold text-slate-900 text-sm">{lightboxPhoto.title}</h4>
+                {lightboxPhoto.subtitle && (
+                  <p className="text-xs text-slate-500">{lightboxPhoto.subtitle}</p>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => setLightboxPhoto(null)}
+                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="flex items-center justify-center bg-slate-100 rounded-xl p-3 overflow-hidden border border-slate-200">
+              <img
+                src={lightboxPhoto.url}
+                alt={lightboxPhoto.title}
+                className={`max-h-[65vh] object-contain rounded-lg shadow-md ${
+                  lightboxPhoto.is3x4 ? 'aspect-[3/4] w-auto h-auto max-w-[280px]' : 'max-w-[280px] rounded-xl'
+                }`}
+              />
+            </div>
+
+            {lightboxPhoto.is3x4 ? (
+              <div className="flex items-center justify-between text-[11px] text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                <span>📷 Ảnh thẻ chuẩn nộp hồ sơ visa (Tỷ lệ 3×4 cm)</span>
+                <span className="font-mono font-bold text-[#033399]">300 DPI</span>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between text-[11px] text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                <span>👤 Ảnh chân dung người bảo lãnh tài chính</span>
+                <span className="font-mono font-bold text-emerald-700">Đã xác minh</span>
+              </div>
+            )}
           </div>
         </div>
       )}
