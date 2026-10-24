@@ -459,16 +459,22 @@ export interface ParallelCase {
 
 export interface Task {
   taskId: string
-  caseId: string
-  studentName: string
+  caseId?: string
+  studentCode?: string
+  studentName?: string
+  targetIntake?: string
+  targetSchool?: string
   title: string
   department: DepartmentCode
-  stageCode: string
+  stageId: WeekStageId
+  stageCode?: string
   status: 'TODO' | 'IN_PROGRESS' | 'COMPLETED'
   priority: 'URGENT' | 'HIGH' | 'MEDIUM' | 'LOW'
   assigneeName: string
+  assigneeRole?: string
   dueAt: string
   description: string
+  completedAt?: string
 }
 
 export interface Student {
