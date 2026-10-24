@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "dev",
+      "problemMatcher": [],
+      "label": "npm: dev",
+      "detail": "Khởi chạy Vite dev server"
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "problemMatcher": ["$tsc"],
+      "label": "npm: build",
+      "detail": "Build dự án TypeScript và Vite"
+    },
+    {
+      "type": "npm",
+      "script": "lint",
+      "problemMatcher": ["$eslint-compact"],
+      "label": "npm: lint",
+      "detail": "Kiểm tra ESLint toàn bộ codebase"
+    }
+  ]
+}

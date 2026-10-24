@@ -1,0 +1,21 @@
+{
+  "name": "shd-korea-management-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SHD Korea Management System — Quản trị hồ sơ du học Hàn Quốc",
+  "scripts": {
+    "dev": "npm --prefix apps/web run dev -- --host 127.0.0.1 --port 5173",
+    "build": "npm --prefix apps/web run build",
+    "lint": "npm --prefix apps/web run lint",
+    "preview": "npm --prefix apps/web run preview"
+  },
+  "keywords": [
+    "shd-korea",
+    "antigravity",
+    "react",
+    "vite",
+    "tailwind"
+  ],
+  "author": "SHD Korea",
+  "license": "UNLICENSED"
+}

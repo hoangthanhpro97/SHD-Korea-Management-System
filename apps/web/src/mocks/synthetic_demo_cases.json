@@ -1,48 +1,573 @@
 {
+  "intakeFlightPeriods": [
+    {
+      "periodId": "INTAKE_2026_12",
+      "name": "Kỳ Đông 12/2026",
+      "intakeMonth": 12,
+      "intakeYear": 2026,
+      "isMainIntake": false,
+      "targetKPI": 6,
+      "currentActive": 6,
+      "flightEstimatedDate": "2026-11-28",
+      "visaDeadline": "2026-11-10",
+      "schoolDeadline": "2026-09-30",
+      "daysUntilFlight": 35,
+      "daysUntilVisaDeadline": 17,
+      "isNearest": true,
+      "isConcurrentActive": true,
+      "metrics": {
+        "studying": 0,
+        "schoolDossierDone": 6,
+        "invoiceReceived": 5,
+        "visaGranted": 2,
+        "delayRiskCount": 1
+      },
+      "delayRiskStudents": [
+        {
+          "studentCode": "SHD2026-005",
+          "studentName": "Vũ Đức Thắng",
+          "reason": "Chưa có Phiếu xét nghiệm lao phổi âm tính BV chỉ định (hạn nộp visa còn 17 ngày)",
+          "suggestedAction": "Nhắc học viên đi khám gấp tại BV Phổi TW trong ngày 26/10 để không bị delay visa"
+        }
+      ]
+    },
+    {
+      "periodId": "INTAKE_2027_03",
+      "name": "Kỳ Xuân 03/2027 (Kỳ chính)",
+      "intakeMonth": 3,
+      "intakeYear": 2027,
+      "isMainIntake": true,
+      "targetKPI": 5,
+      "currentActive": 4,
+      "flightEstimatedDate": "2027-02-26",
+      "visaDeadline": "2027-02-05",
+      "schoolDeadline": "2026-11-15",
+      "daysUntilFlight": 125,
+      "daysUntilVisaDeadline": 104,
+      "isNearest": false,
+      "isConcurrentActive": true,
+      "metrics": {
+        "studying": 4,
+        "schoolDossierDone": 1,
+        "invoiceReceived": 0,
+        "visaGranted": 0,
+        "delayRiskCount": 1
+      },
+      "delayRiskStudents": [
+        {
+          "studentCode": "SHD2026-002",
+          "studentName": "Trần Thị Mai",
+          "reason": "Gia đình chưa nộp trích lục sổ đỏ & ĐKKD hộ cá thể, hạn nộp hồ sơ trường còn 22 ngày",
+          "suggestedAction": "Chuyên viên Lê Thị Thu liên hệ phụ huynh hỗ trợ hướng dẫn làm việc với UBND xã"
+        }
+      ]
+    },
+    {
+      "periodId": "INTAKE_2027_06",
+      "name": "Kỳ Hạ 06/2027",
+      "intakeMonth": 6,
+      "intakeYear": 2027,
+      "isMainIntake": false,
+      "targetKPI": 10,
+      "currentActive": 3,
+      "flightEstimatedDate": "2027-05-28",
+      "visaDeadline": "2027-05-08",
+      "schoolDeadline": "2027-02-28",
+      "daysUntilFlight": 216,
+      "daysUntilVisaDeadline": 196,
+      "isNearest": false,
+      "isConcurrentActive": false,
+      "metrics": {
+        "studying": 3,
+        "schoolDossierDone": 0,
+        "invoiceReceived": 0,
+        "visaGranted": 0,
+        "delayRiskCount": 0
+      }
+    },
+    {
+      "periodId": "INTAKE_2027_09",
+      "name": "Kỳ Thu 09/2027 (Kỳ chính)",
+      "intakeMonth": 9,
+      "intakeYear": 2027,
+      "isMainIntake": true,
+      "targetKPI": 10,
+      "currentActive": 2,
+      "flightEstimatedDate": "2027-08-28",
+      "visaDeadline": "2027-08-05",
+      "schoolDeadline": "2027-05-31",
+      "daysUntilFlight": 308,
+      "daysUntilVisaDeadline": 285,
+      "isNearest": false,
+      "isConcurrentActive": false,
+      "metrics": {
+        "studying": 2,
+        "schoolDossierDone": 0,
+        "invoiceReceived": 0,
+        "visaGranted": 0,
+        "delayRiskCount": 0
+      }
+    },
+    {
+      "periodId": "INTAKE_2027_12",
+      "name": "Kỳ Đông 12/2027 (Kỳ cao điểm)",
+      "intakeMonth": 12,
+      "intakeYear": 2027,
+      "isMainIntake": false,
+      "targetKPI": 35,
+      "currentActive": 0,
+      "flightEstimatedDate": "2027-11-28",
+      "visaDeadline": "2027-11-10",
+      "schoolDeadline": "2027-09-30",
+      "daysUntilFlight": 400,
+      "daysUntilVisaDeadline": 382,
+      "isNearest": false,
+      "isConcurrentActive": false,
+      "metrics": {
+        "studying": 0,
+        "schoolDossierDone": 0,
+        "invoiceReceived": 0,
+        "visaGranted": 0,
+        "delayRiskCount": 0
+      }
+    }
+  ],
   "students": [
     {
       "studentId": "stu_demo_01",
-      "studentCode": "DEMO2026-001",
-      "fullName": "Học viên Demo A",
-      "learningStatus": "STUDYING_KOREAN"
-    }
-  ],
-  "cases": [
+      "studentCode": "SHD2026-001",
+      "fullName": "Nguyễn Minh Anh",
+      "phone": "0987***123",
+      "email": "minhanh.demo@shdkorea.edu.vn",
+      "dob": "2005-04-12",
+      "nativeProvince": "Hà Tĩnh",
+      "targetIntake": "Kỳ 12/2026",
+      "targetSchool": "Đại học Myongji (Seoul)",
+      "targetMajor": "Quản trị kinh doanh",
+      "learningStatus": "INVOICE_STAGE",
+      "registeredDate": "2026-06-15",
+      "gpa": 7.8,
+      "topikLevel": "Sơ cấp 1 (Bài 15)"
+    },
     {
-      "caseId": "case_demo_01",
-      "studentId": "stu_demo_01",
-      "periodId": "period_demo_2026_12",
-      "ownerUserId": "user_demo_hs01",
-      "stageCode": "ST03",
-      "status": "ACTIVE"
-    }
-  ],
-  "schoolApplications": [
+      "studentId": "stu_demo_02",
+      "studentCode": "SHD2026-002",
+      "fullName": "Trần Thị Mai",
+      "phone": "0912***456",
+      "email": "maitran.demo@shdkorea.edu.vn",
+      "dob": "2006-08-20",
+      "nativeProvince": "Nghệ An",
+      "targetIntake": "Kỳ 03/2027",
+      "targetSchool": "Đại học Quốc gia Pusan",
+      "targetMajor": "Truyền thông đại chúng",
+      "learningStatus": "STUDYING_KOREAN",
+      "registeredDate": "2026-09-01",
+      "gpa": 8.2,
+      "topikLevel": "Sơ cấp 1 (Mới nhập học)"
+    },
     {
-      "applicationId": "app_demo_01",
-      "caseId": "case_demo_01",
-      "schoolId": "school_demo_a",
-      "status": "HANDOVER_TO_EXTERNAL"
-    }
-  ],
-  "applicationEvents": [
-    {
-      "id": "ev_demo_01",
-      "applicationId": "app_demo_01",
-      "type": "INTERNAL_HANDOVER",
-      "recordedAt": "2026-10-01T08:00:00+07:00",
-      "evidenceId": "evidence_demo_01"
+      "studentId": "stu_demo_04",
+      "studentCode": "SHD2026-004",
+      "fullName": "Phạm Thảo Linh",
+      "phone": "0934***321",
+      "email": "linhpham.demo@shdkorea.edu.vn",
+      "dob": "2005-02-18",
+      "nativeProvince": "Thanh Hóa",
+      "targetIntake": "Kỳ 12/2026",
+      "targetSchool": "Đại học Chung-Ang (CAU)",
+      "targetMajor": "Thiết kế thời trang",
+      "learningStatus": "WAITING_VISA",
+      "registeredDate": "2026-04-10",
+      "gpa": 8.5,
+      "topikLevel": "TOPIK 2 (Thi đạt 135đ)"
     }
   ],
   "tasks": [
     {
       "taskId": "task_demo_01",
-      "caseId": "case_demo_01",
-      "title": "Đối chiếu biên nhận trường",
+      "caseId": "case_shd_001",
+      "studentName": "Nguyễn Minh Anh",
+      "title": "Bộ phận Kế toán: Thu phí dịch vụ Lần 2 (30 triệu VNĐ) trong 3 ngày",
+      "department": "KE_TOAN",
+      "stageCode": "KẾ TOÁN",
+      "status": "COMPLETED",
+      "priority": "HIGH",
+      "assigneeName": "Nguyễn Thị Kế Toán",
+      "dueAt": "2026-10-25T17:00:00+07:00",
+      "description": "Thu phí trúng tuyển theo thông báo số 43/2026/TB-SHD khi có Invoice ĐH Myongji"
+    },
+    {
+      "taskId": "task_demo_02",
+      "caseId": "case_shd_002",
+      "studentName": "Trần Thị Mai",
+      "title": "Bộ phận Hồ sơ: Thẩm định trích lục Sổ đỏ & Giấy phép KD gia đình",
+      "department": "HO_SO",
+      "stageCode": "HỒ SƠ",
+      "status": "TODO",
+      "priority": "URGENT",
+      "assigneeName": "Lê Thị Thu (Hồ sơ)",
+      "dueAt": "2026-10-26T12:00:00+07:00",
+      "description": "Nhắc phụ huynh gửi bản sao công chứng sổ đỏ và biên lai đóng thuế môn bài"
+    },
+    {
+      "taskId": "task_demo_03",
+      "caseId": "case_shd_003",
+      "studentName": "Phạm Thảo Linh",
+      "title": "Bộ phận Hồ sơ: Hoàn thiện hồ sơ Lãnh sự trước 3 ngày lịch nộp Visa",
+      "department": "HO_SO",
+      "stageCode": "HỒ SƠ",
       "status": "IN_PROGRESS",
-      "assigneeId": "user_demo_hs01",
-      "dueAt": "2026-10-24T17:00:00+07:00"
+      "priority": "HIGH",
+      "assigneeName": "Nguyễn Văn Hải (Hồ sơ)",
+      "dueAt": "2026-10-27T10:00:00+07:00",
+      "description": "Kiểm tra sổ đóng băng K-Study 10.000 USD tại Shinhan Bank và phiếu khám lao"
+    },
+    {
+      "taskId": "task_demo_04",
+      "caseId": "case_shd_001",
+      "studentName": "Nguyễn Minh Anh",
+      "title": "Bộ phận Đào tạo: Đánh giá phỏng vấn thử (Mock Interview) đạt 8.5/10",
+      "department": "DAO_TAO",
+      "stageCode": "ĐÀO TẠO",
+      "status": "COMPLETED",
+      "priority": "MEDIUM",
+      "assigneeName": "Thầy Kim (Giáo viên Đào tạo)",
+      "dueAt": "2026-10-14T16:00:00+07:00",
+      "description": "Học viên tự tin giới thiệu bản thân và trả lời câu hỏi lý do chọn ngành QTKD"
     }
   ],
-  "note": "DỮ LIỆU 100% GIẢ LẬP; không có file, email hay thông tin cá nhân thật."
+  "parallelCases": [
+    {
+      "caseId": "case_shd_001",
+      "studentId": "stu_demo_01",
+      "studentCode": "SHD2026-001",
+      "studentName": "Nguyễn Minh Anh",
+      "dob": "2005-04-12",
+      "phone": "0987***123",
+      "targetIntake": "Kỳ 12/2026 (Du học tiếng D4-1)",
+      "overallStatus": "INVOICE_STAGE",
+      "updatedAt": "2026-10-24T10:00:00+07:00",
+      "trainingTrack": {
+        "koreanLevel": "Sơ cấp 1 (Hoàn thành bài 15)",
+        "classCode": "Lớp KR-S1-08 (Cơ sở Thủ Đức)",
+        "attendanceRate": 98,
+        "missedDays": 1,
+        "topikGoal": "TOPIK 2",
+        "mockInterviewScore": 8.5,
+        "status": "QUALIFIED"
+      },
+      "documentTrack": {
+        "schoolDossierProgress": 100,
+        "schoolDossierStatus": "COMPLETED_100",
+        "consularDossierProgress": 80,
+        "consularDossierStatus": "NOT_READY",
+        "consularDaysBeforeVisa": 7,
+        "financialVerification": {
+          "landCertificateVerified": true,
+          "familyBusinessVerified": true,
+          "savingsBookVerified": true,
+          "verifiedBy": "Nguyễn Văn Hải (Chuyên viên Hồ sơ)",
+          "note": "Sổ đỏ 180m2 tại TX Hồng Lĩnh, ĐKKD hộ cá thể tạp hóa > 5 năm, xác nhận số dư 350tr hợp lệ"
+        }
+      },
+      "externalTrack": {
+        "studentCriteria": {
+          "gpa": 7.8,
+          "missedDaysHighSchool": 2,
+          "preferredRegion": "Khu vực Seoul",
+          "preferredMajor": "Quản trị kinh doanh"
+        },
+        "applications": [
+          {
+            "id": "app_01_myongji",
+            "priority": 1,
+            "schoolName": "Đại học Myongji (Seoul)",
+            "region": "Seoul",
+            "major": "Quản trị kinh doanh",
+            "status": "INVOICE_RECEIVED",
+            "interviewDate": "2026-10-15T14:00:00+07:00",
+            "interviewResultNote": "Đạt phỏng vấn trực tuyến 8.5/10. Trường đánh giá phản xạ tiếng Hàn tốt",
+            "invoiceAmountKRW": 6500000,
+            "invoiceReceivedAt": "2026-10-22T09:30:00+07:00"
+          },
+          {
+            "id": "app_01_konkuk",
+            "priority": 2,
+            "schoolName": "Đại học Konkuk",
+            "region": "Seoul",
+            "major": "Kinh tế quốc tế",
+            "status": "SUBMITTED"
+          }
+        ]
+      },
+      "paymentTrack": {
+        "totalFee": 115000000,
+        "installments": [
+          {
+            "phase": "PHASE_1",
+            "name": "Lần 1: Khi đăng ký & nhập học",
+            "amount": 20000000,
+            "triggerDescription": "Đóng ngay khi đăng ký và nhập học tại SHD Korea",
+            "status": "PAID",
+            "paidAt": "2026-06-15T09:00:00+07:00",
+            "receiptNo": "PT-2026-06-088",
+            "contractStored": true
+          },
+          {
+            "phase": "PHASE_2",
+            "name": "Lần 2: Có thông báo trúng tuyển trường",
+            "amount": 30000000,
+            "triggerDescription": "Đóng trong vòng 3 ngày kể từ khi có kết quả trúng tuyển ĐH Myongji",
+            "status": "PAID",
+            "paidAt": "2026-10-24T08:30:00+07:00",
+            "receiptNo": "PT-2026-10-312",
+            "contractStored": true
+          },
+          {
+            "phase": "PHASE_3",
+            "name": "Lần 3: Khi có tư cách lưu trú / Visa",
+            "amount": 65000000,
+            "triggerDescription": "Đóng trong vòng 3 ngày kể từ khi có kết quả cấp Visa từ Lãnh sự",
+            "status": "PENDING",
+            "contractStored": true
+          }
+        ]
+      },
+      "syncPoints": {
+        "sync1InvoiceReady": true,
+        "sync1Checklist": {
+          "interviewPassed": true,
+          "schoolDossier100": true,
+          "paymentPhase2Collected": true
+        },
+        "sync2VisaReady": false,
+        "sync2Checklist": {
+          "consularDossier3DaysReady": false,
+          "financialDocsVerified": true,
+          "invoicePaidToKorea": false,
+          "kStudyDepositOpened": false
+        },
+        "sync3DepartureReady": false,
+        "sync3Checklist": {
+          "visaGranted": false,
+          "paymentPhase3Collected": false,
+          "flightBooked": false
+        }
+      }
+    },
+    {
+      "caseId": "case_shd_002",
+      "studentId": "stu_demo_02",
+      "studentCode": "SHD2026-002",
+      "studentName": "Trần Thị Mai",
+      "dob": "2006-08-20",
+      "phone": "0912***456",
+      "targetIntake": "Kỳ 03/2027 (Du học tiếng D4-1)",
+      "overallStatus": "STUDYING_AND_PREPARING",
+      "updatedAt": "2026-10-23T15:00:00+07:00",
+      "trainingTrack": {
+        "koreanLevel": "Sơ cấp 1 (Mới nhập học)",
+        "classCode": "Lớp KR-S1-12 (Cơ sở Thủ Đức)",
+        "attendanceRate": 92,
+        "missedDays": 2,
+        "topikGoal": "TOPIK 1 Level 2",
+        "mockInterviewScore": 6.0,
+        "status": "STUDYING"
+      },
+      "documentTrack": {
+        "schoolDossierProgress": 45,
+        "schoolDossierStatus": "INCOMPLETE",
+        "consularDossierProgress": 10,
+        "consularDossierStatus": "NOT_READY",
+        "consularDaysBeforeVisa": 0,
+        "financialVerification": {
+          "landCertificateVerified": false,
+          "familyBusinessVerified": false,
+          "savingsBookVerified": false,
+          "verifiedBy": "Lê Thị Thu (Chuyên viên Hồ sơ)",
+          "note": "CẢNH BÁO: Gia đình chưa gửi bản trích lục sổ đỏ và giấy xác nhận kinh doanh ki-ốt chợ Vinh"
+        }
+      },
+      "externalTrack": {
+        "studentCriteria": {
+          "gpa": 8.2,
+          "missedDaysHighSchool": 0,
+          "preferredRegion": "Khu vực Busan / Miền Nam",
+          "preferredMajor": "Truyền thông"
+        },
+        "applications": [
+          {
+            "id": "app_02_pusan",
+            "priority": 1,
+            "schoolName": "Đại học Quốc gia Pusan",
+            "region": "Busan",
+            "major": "Truyền thông đại chúng",
+            "status": "EVALUATING"
+          }
+        ]
+      },
+      "paymentTrack": {
+        "totalFee": 115000000,
+        "installments": [
+          {
+            "phase": "PHASE_1",
+            "name": "Lần 1: Khi đăng ký & nhập học",
+            "amount": 20000000,
+            "triggerDescription": "Đóng ngay khi đăng ký và nhập học tại SHD Korea",
+            "status": "PAID",
+            "paidAt": "2026-09-02T11:00:00+07:00",
+            "receiptNo": "PT-2026-09-014",
+            "contractStored": true
+          },
+          {
+            "phase": "PHASE_2",
+            "name": "Lần 2: Có thông báo trúng tuyển trường",
+            "amount": 30000000,
+            "triggerDescription": "Đóng trong vòng 3 ngày kể từ khi có kết quả trúng tuyển trường",
+            "status": "PENDING",
+            "contractStored": true
+          },
+          {
+            "phase": "PHASE_3",
+            "name": "Lần 3: Khi có tư cách lưu trú / Visa",
+            "amount": 65000000,
+            "triggerDescription": "Đóng trong vòng 3 ngày kể từ khi có Visa",
+            "status": "PENDING",
+            "contractStored": true
+          }
+        ]
+      },
+      "syncPoints": {
+        "sync1InvoiceReady": false,
+        "sync1Checklist": {
+          "interviewPassed": false,
+          "schoolDossier100": false,
+          "paymentPhase2Collected": false
+        },
+        "sync2VisaReady": false,
+        "sync2Checklist": {
+          "consularDossier3DaysReady": false,
+          "financialDocsVerified": false,
+          "invoicePaidToKorea": false,
+          "kStudyDepositOpened": false
+        },
+        "sync3DepartureReady": false,
+        "sync3Checklist": {
+          "visaGranted": false,
+          "paymentPhase3Collected": false,
+          "flightBooked": false
+        }
+      }
+    },
+    {
+      "caseId": "case_shd_003",
+      "studentId": "stu_demo_04",
+      "studentCode": "SHD2026-004",
+      "studentName": "Phạm Thảo Linh",
+      "dob": "2005-02-18",
+      "phone": "0934***321",
+      "targetIntake": "Kỳ 12/2026 (Du học tiếng D4-1)",
+      "overallStatus": "VISA_STAGE",
+      "updatedAt": "2026-10-24T09:00:00+07:00",
+      "trainingTrack": {
+        "koreanLevel": "Hoàn thành Sơ cấp 2 (TOPIK 2)",
+        "classCode": "Lớp KR-S2-04",
+        "attendanceRate": 100,
+        "missedDays": 0,
+        "topikGoal": "TOPIK 3",
+        "mockInterviewScore": 9.2,
+        "status": "QUALIFIED"
+      },
+      "documentTrack": {
+        "schoolDossierProgress": 100,
+        "schoolDossierStatus": "COMPLETED_100",
+        "consularDossierProgress": 100,
+        "consularDossierStatus": "READY_FOR_VISA",
+        "consularDaysBeforeVisa": 5,
+        "financialVerification": {
+          "landCertificateVerified": true,
+          "familyBusinessVerified": true,
+          "savingsBookVerified": true,
+          "verifiedBy": "Nguyễn Văn Hải (Chuyên viên Hồ sơ)",
+          "note": "Đã mở sổ đóng băng K-Study 10.000 USD tại Shinhan Bank; phiếu khám lao âm tính BV Chợ Rẫy"
+        }
+      },
+      "externalTrack": {
+        "studentCriteria": {
+          "gpa": 8.5,
+          "missedDaysHighSchool": 1,
+          "preferredRegion": "Seoul",
+          "preferredMajor": "Thiết kế thời trang"
+        },
+        "applications": [
+          {
+            "id": "app_04_cau",
+            "priority": 1,
+            "schoolName": "Đại học Chung-Ang (CAU)",
+            "region": "Seoul",
+            "major": "Thiết kế thời trang",
+            "status": "INVOICE_RECEIVED",
+            "interviewDate": "2026-09-20T10:00:00+07:00",
+            "interviewResultNote": "Đỗ chính thức xuất sắc. Khoa Thiết kế gửi thư chúc mừng",
+            "invoiceAmountKRW": 7200000,
+            "invoiceReceivedAt": "2026-09-28T15:00:00+07:00"
+          }
+        ]
+      },
+      "paymentTrack": {
+        "totalFee": 115000000,
+        "installments": [
+          {
+            "phase": "PHASE_1",
+            "name": "Lần 1: Khi đăng ký & nhập học",
+            "amount": 20000000,
+            "triggerDescription": "Đã thanh toán ngày 10/04/2026",
+            "status": "PAID",
+            "paidAt": "2026-04-10T14:00:00+07:00",
+            "receiptNo": "PT-2026-04-041",
+            "contractStored": true
+          },
+          {
+            "phase": "PHASE_2",
+            "name": "Lần 2: Có thông báo trúng tuyển trường",
+            "amount": 30000000,
+            "triggerDescription": "Đã thanh toán ngày 30/09/2026",
+            "status": "PAID",
+            "paidAt": "2026-09-30T10:00:00+07:00",
+            "receiptNo": "PT-2026-09-205",
+            "contractStored": true
+          },
+          {
+            "phase": "PHASE_3",
+            "name": "Lần 3: Khi có tư cách lưu trú / Visa",
+            "amount": 65000000,
+            "triggerDescription": "Đang chờ kết quả nộp Visa KVAC để kích hoạt thu",
+            "status": "PENDING",
+            "contractStored": true
+          }
+        ]
+      },
+      "syncPoints": {
+        "sync1InvoiceReady": true,
+        "sync1Checklist": {
+          "interviewPassed": true,
+          "schoolDossier100": true,
+          "paymentPhase2Collected": true
+        },
+        "sync2VisaReady": true,
+        "sync2Checklist": {
+          "consularDossier3DaysReady": true,
+          "financialDocsVerified": true,
+          "invoicePaidToKorea": true,
+          "kStudyDepositOpened": true
+        },
+        "sync3DepartureReady": false,
+        "sync3Checklist": {
+          "visaGranted": false,
+          "paymentPhase3Collected": false,
+          "flightBooked": false
+        }
+      }
+    }
+  ]
 }
