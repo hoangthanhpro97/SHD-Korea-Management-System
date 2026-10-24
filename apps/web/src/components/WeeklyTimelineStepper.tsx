@@ -47,9 +47,9 @@ export default function WeeklyTimelineStepper({
       </div>
 
       {/* Stepper Scroll Container */}
-      <div className="relative overflow-x-auto pb-4 pt-2">
+      <div className="relative overflow-x-auto pb-5 pt-6 px-3">
         {/* Connecting horizontal line */}
-        <div className="absolute left-8 right-8 top-7 h-1 -translate-y-1/2 bg-slate-200 hidden md:block" />
+        <div className="absolute left-8 right-8 top-[46px] h-1 -translate-y-1/2 bg-slate-200 hidden md:block" />
 
         <div className="flex min-w-[780px] items-start justify-between gap-2">
           {WEEK_STAGES.map((stage, idx) => {
@@ -63,7 +63,9 @@ export default function WeeklyTimelineStepper({
             const missingCount = stageItems.filter((i) => i.status === 'MISSING').length
             const isBlockedStage = isCurrent && (stageStatus === 'BLOCKED' || missingCount > 0)
 
-            let circleClass = 'bg-slate-100 text-slate-500 border-2 border-slate-300'
+            let circleClass = isSelected
+              ? 'bg-slate-100 text-slate-700 border-2 border-white ring-4 ring-slate-400 ring-offset-2 shadow-md'
+              : 'bg-slate-100 text-slate-500 border-2 border-slate-300'
             let statusBadge = (
               <span className="rounded bg-slate-100 px-1.5 py-0.2 text-[9px] font-semibold text-slate-500">
                 Chưa đến
@@ -71,7 +73,9 @@ export default function WeeklyTimelineStepper({
             )
 
             if (isCompleted) {
-              circleClass = 'bg-emerald-600 text-white border-2 border-emerald-500 shadow-xs'
+              circleClass = isSelected
+                ? 'bg-emerald-600 text-white border-2 border-white ring-4 ring-emerald-500 ring-offset-2 shadow-lg'
+                : 'bg-emerald-600 text-white border-2 border-emerald-500 shadow-xs'
               statusBadge = (
                 <span className="rounded bg-emerald-100 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800">
                   ✓ Hoàn tất
@@ -79,14 +83,18 @@ export default function WeeklyTimelineStepper({
               )
             } else if (isCurrent) {
               if (isBlockedStage) {
-                circleClass = 'bg-rose-600 text-white border-4 border-rose-200 ring-2 ring-rose-500 shadow-md animate-pulse'
+                circleClass = isSelected
+                  ? 'bg-rose-600 text-white border-2 border-white ring-4 ring-rose-500 ring-offset-2 shadow-lg animate-pulse'
+                  : 'bg-rose-600 text-white border-2 border-rose-200 ring-2 ring-rose-500 shadow-md animate-pulse'
                 statusBadge = (
                   <span className="rounded bg-rose-100 px-1.5 py-0.2 text-[9px] font-bold text-rose-800">
                     ⚠️ Điểm nghẽn
                   </span>
                 )
               } else {
-                circleClass = 'bg-[#033399] text-white border-4 border-blue-200 ring-2 ring-blue-500 shadow-md'
+                circleClass = isSelected
+                  ? 'bg-[#033399] text-white border-2 border-white ring-4 ring-blue-500 ring-offset-2 shadow-lg'
+                  : 'bg-[#033399] text-white border-2 border-blue-200 ring-2 ring-blue-500 shadow-md'
                 statusBadge = (
                   <span className="rounded bg-blue-100 px-1.5 py-0.2 text-[9px] font-bold text-blue-800">
                     Đang xử lý
@@ -100,15 +108,11 @@ export default function WeeklyTimelineStepper({
                 key={stage.id}
                 type="button"
                 onClick={() => onSelectStage(stage.id)}
-                className={`group relative z-10 flex flex-1 flex-col items-center text-center transition-all cursor-pointer focus:outline-hidden ${
-                  isSelected ? 'scale-105' : 'hover:opacity-90'
-                }`}
+                className="group relative z-10 flex flex-1 flex-col items-center text-center transition-all cursor-pointer focus:outline-hidden hover:opacity-95"
               >
                 {/* Stage Circle */}
                 <div
-                  className={`flex h-11 w-11 items-center justify-center rounded-full text-xs font-black transition-all ${circleClass} ${
-                    isSelected ? 'ring-4 ring-indigo-500 ring-offset-2 scale-110 shadow-lg' : ''
-                  }`}
+                  className={`flex h-11 w-11 items-center justify-center rounded-full text-xs font-black transition-all ${circleClass}`}
                 >
                   {isCompleted ? (
                     <span className="text-base">✓</span>
