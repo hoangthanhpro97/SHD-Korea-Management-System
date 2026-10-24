@@ -1557,6 +1557,32 @@ export const CASES_BY_INTAKE_DATA: CaseByIntake[] = [
   }
 ]
 
+// Danh sách ảnh mẫu học viên chuẩn tỷ lệ 3x4 và ảnh phụ huynh
+export const STUDENT_PHOTO_SAMPLES = [
+  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80'
+]
+
+export const FATHER_PHOTO_SAMPLES = [
+  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&auto=format&fit=crop&q=80'
+]
+
+export const MOTHER_PHOTO_SAMPLES = [
+  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=300&auto=format&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1548142813-c348350df52b?w=300&auto=format&fit=crop&q=80'
+]
+
 // Hàm tạo danh sách phụ huynh chi tiết & người bảo lãnh tài chính
 export function generateParentsForCase(studentCode: string, studentName: string): ParentInfo[] {
   const specificMap: Record<string, ParentInfo[]> = {
@@ -1572,6 +1598,7 @@ export function generateParentsForCase(studentCode: string, studentName: string)
         workplace: 'KCN Đình Vũ, Hải Phòng',
         address: 'Quận Ngô Quyền, Hải Phòng',
         idCard: '031075001234',
+        photoUrl: FATHER_PHOTO_SAMPLES[0],
         isFinancialSponsor: true,
         notes: 'Đứng tên Sổ tiết kiệm 1 tỷ VNĐ & Sao kê tài khoản doanh nghiệp'
       },
@@ -1586,6 +1613,7 @@ export function generateParentsForCase(studentCode: string, studentName: string)
         workplace: 'Công ty CP May Hải Phòng',
         address: 'Quận Ngô Quyền, Hải Phòng',
         idCard: '031178005678',
+        photoUrl: MOTHER_PHOTO_SAMPLES[0],
         isFinancialSponsor: false,
         notes: 'Đầu mối phụ trách hồ sơ cư trú CT07 & giấy tờ nhân thân'
       }
@@ -1602,6 +1630,7 @@ export function generateParentsForCase(studentCode: string, studentName: string)
         workplace: 'Làng nghề Đông Giao, Cẩm Giàng, Hải Dương',
         address: 'Huyện Cẩm Giàng, Hải Dương',
         idCard: '030076008899',
+        photoUrl: FATHER_PHOTO_SAMPLES[1],
         isFinancialSponsor: true,
         notes: '⚠️ Cần đôn đốc chuyển tiền mở sổ đóng băng K-Study 10.000 USD'
       },
@@ -1616,6 +1645,7 @@ export function generateParentsForCase(studentCode: string, studentName: string)
         workplace: 'Bưu điện huyện Cẩm Giàng, Hải Dương',
         address: 'Huyện Cẩm Giàng, Hải Dương',
         idCard: '030179004455',
+        photoUrl: MOTHER_PHOTO_SAMPLES[1],
         isFinancialSponsor: false,
         notes: 'Đã hoàn thành xác nhận nhân thân và sổ hộ khẩu gia đình'
       }
@@ -1632,6 +1662,7 @@ export function generateParentsForCase(studentCode: string, studentName: string)
         workplace: 'Thị trấn Giao Thủy, Nam Định',
         address: 'Huyện Giao Thủy, Nam Định',
         idCard: '036073001122',
+        photoUrl: FATHER_PHOTO_SAMPLES[2],
         isFinancialSponsor: true,
         notes: 'Đang xin cấp lại trích lục Sổ đỏ đất ở tại UBND huyện'
       },
@@ -1646,6 +1677,7 @@ export function generateParentsForCase(studentCode: string, studentName: string)
         workplace: 'Thị trấn Giao Thủy, Nam Định',
         address: 'Huyện Giao Thủy, Nam Định',
         idCard: '036177003344',
+        photoUrl: MOTHER_PHOTO_SAMPLES[2],
         isFinancialSponsor: false,
         notes: 'Hỗ trợ nộp biên lai thuế môn bài các năm gần nhất'
       }
@@ -1662,6 +1694,7 @@ export function generateParentsForCase(studentCode: string, studentName: string)
         workplace: 'Công an tỉnh Nghệ An',
         address: 'TP. Vinh, Nghệ An',
         idCard: '040072009988',
+        photoUrl: FATHER_PHOTO_SAMPLES[3],
         isFinancialSponsor: true,
         notes: 'Bảo lãnh tài chính chính, đầy đủ sổ hưu và sao kê ngân hàng'
       },
@@ -1676,6 +1709,7 @@ export function generateParentsForCase(studentCode: string, studentName: string)
         workplace: 'TP. Vinh, Nghệ An',
         address: 'TP. Vinh, Nghệ An',
         idCard: '040176007766',
+        photoUrl: MOTHER_PHOTO_SAMPLES[3],
         isFinancialSponsor: false,
         notes: 'Người trao đổi trực tiếp lịch học tiếng và rèn luyện phỏng vấn'
       }
@@ -1692,6 +1726,7 @@ export function generateParentsForCase(studentCode: string, studentName: string)
         workplace: 'TP. Bắc Ninh, Bắc Ninh',
         address: 'TP. Bắc Ninh, Bắc Ninh',
         idCard: '027074001234',
+        photoUrl: FATHER_PHOTO_SAMPLES[0],
         isFinancialSponsor: true,
         notes: 'Đã hoàn tất chứng minh thu nhập sao kê lương 35 triệu/tháng'
       },
@@ -1706,6 +1741,7 @@ export function generateParentsForCase(studentCode: string, studentName: string)
         workplace: 'Bệnh viện Đa khoa tỉnh Bắc Ninh',
         address: 'TP. Bắc Ninh, Bắc Ninh',
         idCard: '027177005678',
+        photoUrl: MOTHER_PHOTO_SAMPLES[0],
         isFinancialSponsor: false,
         notes: 'Phụ trách theo dõi sức khỏe và lịch tiêm chủng, khám lao'
       }
@@ -1737,6 +1773,7 @@ export function generateParentsForCase(studentCode: string, studentName: string)
       workplace: 'Cơ sở sản xuất & Thương mại gia đình',
       address: 'Hải Dương / Hà Nội',
       idCard: `0300${String(randomFatherYear).slice(2)}00${phoneSuffix}`,
+      photoUrl: FATHER_PHOTO_SAMPLES[baseSeed % FATHER_PHOTO_SAMPLES.length],
       isFinancialSponsor: true,
       notes: 'Bảo trợ tài chính chính, đứng tên sổ đỏ nhà đất & tài sản bảo lãnh'
     },
@@ -1751,14 +1788,18 @@ export function generateParentsForCase(studentCode: string, studentName: string)
       workplace: 'Đơn vị hành chính sự nghiệp địa phương',
       address: 'Hải Dương / Hà Nội',
       idCard: `0301${String(randomMotherYear).slice(2)}00${phoneSuffix}`,
+      photoUrl: MOTHER_PHOTO_SAMPLES[baseSeed % MOTHER_PHOTO_SAMPLES.length],
       isFinancialSponsor: false,
       notes: 'Đầu mối liên hệ gia đình tiếp nhận thông báo tiến độ & học phí'
     }
   ]
 }
 
-// Tự động gán danh sách phụ huynh cho toàn bộ học viên có sẵn
-CASES_BY_INTAKE_DATA.forEach((c) => {
+// Tự động gán ảnh thẻ 3x4 và danh sách phụ huynh cho toàn bộ học viên có sẵn
+CASES_BY_INTAKE_DATA.forEach((c, idx) => {
+  if (!c.photoUrl) {
+    c.photoUrl = STUDENT_PHOTO_SAMPLES[idx % STUDENT_PHOTO_SAMPLES.length]
+  }
   if (!c.parents || c.parents.length === 0) {
     c.parents = generateParentsForCase(c.studentCode, c.studentName)
   }
@@ -1821,6 +1862,7 @@ export function getSimulatedCohortForPeriod(periodId: string, totalCount = 40): 
       studentName: name,
       dob: '2006-05-15',
       phone: `098${i % 9}***${100 + i}`,
+      photoUrl: STUDENT_PHOTO_SAMPLES[i % STUDENT_PHOTO_SAMPLES.length],
       periodId,
       intakeName: periodObj.name,
       targetSchool: schoolObj.school,

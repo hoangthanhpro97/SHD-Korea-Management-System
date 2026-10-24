@@ -167,6 +167,7 @@ export interface ParentInfo {
   workplace?: string
   address?: string
   idCard?: string
+  photoUrl?: string // Ảnh chân dung phụ huynh
   isFinancialSponsor: boolean // Người bảo trợ tài chính chính (đứng tên sổ đỏ / sổ tiết kiệm)
   notes?: string
 }
@@ -179,6 +180,7 @@ export interface CaseByIntake {
   studentName: string
   dob: string
   phone: string
+  photoUrl?: string // Ảnh thẻ học viên tỷ lệ 3x4
   periodId: string // Thuộc kỳ bay nào
   intakeName: string
   targetSchool: string
@@ -484,5 +486,6 @@ export interface Student {
   registeredDate: string
   gpa: number
   topikLevel: string
+  photoUrl?: string
   parents?: ParentInfo[]
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import DemoBadge from '../components/DemoBadge'
+import PhotoAvatar from '../components/PhotoAvatar'
 import { CASES_BY_INTAKE_DATA, INTAKE_PERIODS_DATA } from '../mocks/intake_management_mock'
 import { WEEK_STAGES, type CaseByIntake, type WeekStageId, type ParentInfo } from '../types/schema'
 
@@ -108,7 +109,7 @@ export default function StudentsPage() {
             Quản lý Học viên & Phụ huynh
           </h1>
           <p className="mt-1 text-sm text-slate-500">
-            Theo dõi song song: Tiến độ hồ sơ du học, đào tạo tiếng Hàn, và danh sách phụ huynh bảo lãnh tài chính
+            Theo dõi song song: Tiến độ hồ sơ du học, ảnh thẻ 3x4, đào tạo tiếng Hàn, và hồ sơ phụ huynh bảo lãnh
           </p>
         </div>
         <DemoBadge />
@@ -270,10 +271,10 @@ export default function StudentsPage() {
           {/* Table: Danh sách Học viên */}
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xs">
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[950px]">
+              <table className="w-full text-left border-collapse min-w-[980px]">
                 <thead>
                   <tr className="border-b border-slate-200 bg-slate-50/75 text-[11px] font-bold text-slate-600 uppercase tracking-wider">
-                    <th className="py-3 px-3">Học viên</th>
+                    <th className="py-3 px-3">Học viên (Ảnh thẻ 3x4)</th>
                     <th className="py-3 px-3">Kỳ bay & Nguyện vọng</th>
                     <th className="py-3 px-3">Tiến độ hồ sơ</th>
                     <th className="py-3 px-3">Đang học tiếng</th>
@@ -299,23 +300,37 @@ export default function StudentsPage() {
                           key={s.caseId}
                           className="hover:bg-slate-50/80 transition-colors"
                         >
-                          {/* Cột 1: Thông tin học viên (Hàng 1: Tên, Hàng 2: Mã, Hàng 3: SĐT) */}
+                          {/* Cột 1: Thông tin học viên (Ảnh thẻ 3x4 + Tên ở Hàng 1, Mã ở Hàng 2, SĐT ở Hàng 3) */}
                           <td className="py-3 px-3">
-                            <div className="space-y-0.5">
-                              <button
-                                type="button"
-                                onClick={() => setSelectedStudent(s)}
-                                className="font-bold text-slate-900 text-xs text-left hover:text-[#033399] transition-colors cursor-pointer"
-                                title="Xem phiếu thông tin đào tạo & phụ huynh"
-                              >
-                                {s.studentName}
-                              </button>
-                              <p className="font-mono text-[11px] font-bold text-[#033399]">
-                                {s.studentCode}
-                              </p>
-                              <p className="text-[11px] text-slate-500">
-                                {s.phone}
-                              </p>
+                            <div className="flex items-center gap-2.5">
+                              {/* Ảnh thẻ 3x4 */}
+                              <PhotoAvatar
+                                src={s.photoUrl}
+                                alt={s.studentName}
+                                aspectRatio="3:4"
+                                size="sm"
+                                show3x4Badge
+                                rounded="md"
+                                fallbackType="student"
+                                className="border border-slate-300 shadow-2xs shrink-0"
+                              />
+
+                              <div className="space-y-0.5">
+                                <button
+                                  type="button"
+                                  onClick={() => setSelectedStudent(s)}
+                                  className="font-bold text-slate-900 text-xs text-left hover:text-[#033399] transition-colors cursor-pointer"
+                                  title="Xem phiếu thông tin đào tạo & phụ huynh"
+                                >
+                                  {s.studentName}
+                                </button>
+                                <p className="font-mono text-[11px] font-bold text-[#033399]">
+                                  {s.studentCode}
+                                </p>
+                                <p className="text-[11px] text-slate-500">
+                                  {s.phone}
+                                </p>
+                              </div>
                             </div>
                           </td>
 
@@ -594,37 +609,48 @@ export default function StudentsPage() {
                         key={`${student.caseId}_${parent.parentId}`}
                         className="hover:bg-slate-50/80 transition-colors"
                       >
-                        {/* Cột 1: Thông tin học viên */}
+                        {/* Cột 1: Thông tin học viên (kèm ảnh thẻ 3x4 nhỏ) */}
                         <td className="py-3 px-3">
-                          <div className="space-y-0.5">
-                            <Link
-                              to={`/cases?periodId=${student.periodId}&caseId=${student.caseId}`}
-                              className="font-bold text-slate-900 text-xs hover:text-[#033399] transition-colors"
-                              title="Bấm để mở hồ sơ học viên này"
-                            >
-                              {student.studentName}
-                            </Link>
-                            <p className="font-mono text-[11px] font-bold text-[#033399]">
-                              {student.studentCode}
-                            </p>
-                            <span className="inline-block rounded bg-indigo-50 px-1.5 py-0.2 text-[10px] font-semibold text-[#033399] border border-indigo-200">
-                              {student.intakeName}
-                            </span>
+                          <div className="flex items-center gap-2">
+                            <PhotoAvatar
+                              src={student.photoUrl}
+                              alt={student.studentName}
+                              aspectRatio="3:4"
+                              size="xs"
+                              rounded="sm"
+                              fallbackType="student"
+                              className="border border-slate-200 shrink-0"
+                            />
+                            <div className="space-y-0.5">
+                              <Link
+                                to={`/cases?periodId=${student.periodId}&caseId=${student.caseId}`}
+                                className="font-bold text-slate-900 text-xs hover:text-[#033399] transition-colors"
+                                title="Bấm để mở hồ sơ học viên này"
+                              >
+                                {student.studentName}
+                              </Link>
+                              <p className="font-mono text-[11px] font-bold text-[#033399]">
+                                {student.studentCode}
+                              </p>
+                              <span className="inline-block rounded bg-indigo-50 px-1.5 py-0.2 text-[10px] font-semibold text-[#033399] border border-indigo-200">
+                                {student.intakeName}
+                              </span>
+                            </div>
                           </div>
                         </td>
 
-                        {/* Cột 2: Phụ huynh & Vai trò */}
+                        {/* Cột 2: Phụ huynh & Vai trò (kèm ảnh chân dung phụ huynh) */}
                         <td className="py-3 px-3">
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold ${
-                                parent.relationship === 'BO'
-                                  ? 'bg-blue-100 text-[#033399]'
-                                  : 'bg-rose-100 text-rose-800'
-                              }`}
-                            >
-                              {parent.relationship === 'BO' ? '👨' : '👩'}
-                            </span>
+                          <div className="flex items-center gap-2.5">
+                            <PhotoAvatar
+                              src={parent.photoUrl}
+                              alt={parent.fullName}
+                              aspectRatio="1:1"
+                              size="sm"
+                              rounded="lg"
+                              fallbackType={parent.relationship === 'BO' ? 'father' : 'mother'}
+                              className="border border-slate-300 shadow-2xs shrink-0"
+                            />
                             <div>
                               <p className="font-bold text-slate-900 text-xs">
                                 {parent.fullName}
@@ -738,17 +764,35 @@ export default function StudentsPage() {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs"
         >
           <div className="max-w-2xl w-full rounded-2xl bg-white p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+            {/* Header Modal kèm Ảnh thẻ 3x4 của học viên */}
             <div className="flex items-start justify-between border-b border-slate-100 pb-3">
-              <div>
-                <span className="font-mono text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-                  {selectedStudent.studentCode}
-                </span>
-                <h3 className="text-xl font-bold text-slate-900 mt-1">
-                  {selectedStudent.studentName}
-                </h3>
-                <p className="text-xs text-slate-500">
-                  {selectedStudent.intakeName} • Mục tiêu: {selectedStudent.targetSchool} ({selectedStudent.targetMajor})
-                </p>
+              <div className="flex items-center gap-3.5">
+                <PhotoAvatar
+                  src={selectedStudent.photoUrl}
+                  alt={selectedStudent.studentName}
+                  aspectRatio="3:4"
+                  size="lg"
+                  show3x4Badge
+                  rounded="md"
+                  fallbackType="student"
+                  className="border-2 border-white shadow-md ring-1 ring-slate-200 shrink-0"
+                />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                      {selectedStudent.studentCode}
+                    </span>
+                    <span className="rounded bg-slate-100 text-slate-600 px-1.5 py-0.2 text-[10px] font-bold">
+                      Ảnh thẻ 3x4
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mt-1">
+                    {selectedStudent.studentName}
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    {selectedStudent.intakeName} • Mục tiêu: {selectedStudent.targetSchool} ({selectedStudent.targetMajor})
+                  </p>
+                </div>
               </div>
               <button
                 type="button"
@@ -833,7 +877,7 @@ export default function StudentsPage() {
               </div>
             </div>
 
-            {/* Chi tiết Phụ huynh & Người bảo lãnh */}
+            {/* Chi tiết Phụ huynh & Người bảo lãnh (kèm ảnh phụ huynh) */}
             {selectedStudent.parents && selectedStudent.parents.length > 0 && (
               <div className="space-y-2">
                 <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
@@ -844,44 +888,56 @@ export default function StudentsPage() {
                   {selectedStudent.parents.map((p) => (
                     <div
                       key={p.parentId}
-                      className="rounded-xl border border-indigo-100 bg-indigo-50/40 p-3 space-y-1"
+                      className="rounded-xl border border-indigo-100 bg-indigo-50/40 p-3 flex items-start gap-3"
                     >
-                      <div className="flex items-center justify-between">
-                        <strong className="text-slate-900 text-sm">{p.fullName}</strong>
-                        <span
-                          className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
-                            p.relationship === 'BO'
-                              ? 'bg-blue-100 text-blue-800'
-                              : 'bg-rose-100 text-rose-800'
-                          }`}
-                        >
-                          {p.relationLabel}
-                        </span>
+                      {/* Ảnh phụ huynh */}
+                      <PhotoAvatar
+                        src={p.photoUrl}
+                        alt={p.fullName}
+                        aspectRatio="1:1"
+                        size="md"
+                        rounded="lg"
+                        fallbackType={p.relationship === 'BO' ? 'father' : 'mother'}
+                        className="border border-slate-200 shadow-2xs shrink-0 mt-0.5"
+                      />
+                      <div className="flex-1 space-y-1">
+                        <div className="flex items-center justify-between">
+                          <strong className="text-slate-900 text-sm">{p.fullName}</strong>
+                          <span
+                            className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
+                              p.relationship === 'BO'
+                                ? 'bg-blue-100 text-blue-800'
+                                : 'bg-rose-100 text-rose-800'
+                            }`}
+                          >
+                            {p.relationLabel}
+                          </span>
+                        </div>
+                        <p className="text-slate-600">
+                          Năm sinh: <strong>{p.yearOfBirth}</strong> • CCCD: <span className="font-mono">{p.idCard || 'Đang cập nhật'}</span>
+                        </p>
+                        <p className="text-slate-700">
+                          SĐT: <strong className="font-mono text-[#033399]">{p.phone}</strong>
+                        </p>
+                        <p className="text-slate-600">
+                          Nghề nghiệp: <strong>{p.job}</strong>
+                        </p>
+                        {p.workplace && (
+                          <p className="text-slate-500 text-[11px]">
+                            Nơi làm việc: {p.workplace}
+                          </p>
+                        )}
+                        {p.isFinancialSponsor && (
+                          <span className="inline-block rounded bg-emerald-100 text-emerald-800 px-2 py-0.5 text-[10px] font-bold mt-1">
+                            ✓ Người bảo trợ tài chính chính
+                          </span>
+                        )}
+                        {p.notes && (
+                          <p className="text-[11px] text-slate-500 italic mt-1 border-t border-indigo-100/60 pt-1">
+                            {p.notes}
+                          </p>
+                        )}
                       </div>
-                      <p className="text-slate-600">
-                        Năm sinh: <strong>{p.yearOfBirth}</strong> • CCCD: <span className="font-mono">{p.idCard || 'Đang cập nhật'}</span>
-                      </p>
-                      <p className="text-slate-700">
-                        SĐT: <strong className="font-mono text-[#033399]">{p.phone}</strong>
-                      </p>
-                      <p className="text-slate-600">
-                        Nghề nghiệp: <strong>{p.job}</strong>
-                      </p>
-                      {p.workplace && (
-                        <p className="text-slate-500 text-[11px]">
-                          Nơi làm việc: {p.workplace}
-                        </p>
-                      )}
-                      {p.isFinancialSponsor && (
-                        <span className="inline-block rounded bg-emerald-100 text-emerald-800 px-2 py-0.5 text-[10px] font-bold mt-1">
-                          ✓ Người bảo trợ tài chính chính
-                        </span>
-                      )}
-                      {p.notes && (
-                        <p className="text-[11px] text-slate-500 italic mt-1 border-t border-indigo-100/60 pt-1">
-                          {p.notes}
-                        </p>
-                      )}
                     </div>
                   ))}
                 </div>

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
 import DemoBadge from '../components/DemoBadge'
+import PhotoAvatar from '../components/PhotoAvatar'
 import StageDossierDetail from '../components/StageDossierDetail'
 import WeeklyTimelineStepper from '../components/WeeklyTimelineStepper'
 import {
@@ -373,14 +374,25 @@ export default function CasesPage() {
                     : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
-                <div className="flex items-start justify-between">
-                  <div className="truncate">
-                    <span className="font-mono text-[10px] font-bold text-[#033399] bg-white px-1.5 py-0.2 rounded border border-blue-200">
-                      {student.studentCode}
-                    </span>
-                    <h4 className="text-xs font-bold text-slate-900 mt-1 truncate">
-                      {student.studentName}
-                    </h4>
+                <div className="flex items-start justify-between gap-1.5">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <PhotoAvatar
+                      src={student.photoUrl}
+                      alt={student.studentName}
+                      aspectRatio="3:4"
+                      size="xs"
+                      rounded="sm"
+                      fallbackType="student"
+                      className="border border-slate-200 shrink-0"
+                    />
+                    <div className="min-w-0">
+                      <span className="font-mono text-[10px] font-bold text-[#033399] bg-white px-1.5 py-0.2 rounded border border-blue-200 block truncate">
+                        {student.studentCode}
+                      </span>
+                      <h4 className="text-xs font-bold text-slate-900 mt-0.5 truncate">
+                        {student.studentName}
+                      </h4>
+                    </div>
                   </div>
 
                   {isBlocked ? (
@@ -444,9 +456,16 @@ export default function CasesPage() {
       <section className="rounded-2xl border-2 border-slate-200 bg-white p-5 shadow-xs space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div className="flex items-center gap-3.5">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#033399] text-white font-black text-lg shadow-sm">
-              {currentCase.studentName.charAt(0)}
-            </div>
+            <PhotoAvatar
+              src={currentCase.photoUrl}
+              alt={currentCase.studentName}
+              aspectRatio="3:4"
+              size="lg"
+              show3x4Badge
+              rounded="md"
+              fallbackType="student"
+              className="border-2 border-white shadow-md ring-1 ring-slate-200 shrink-0"
+            />
             <div>
               <div className="flex items-center gap-2">
                 <span className="rounded-md bg-slate-100 px-2 py-0.5 font-mono text-xs font-bold text-slate-700">
@@ -457,6 +476,9 @@ export default function CasesPage() {
                 </h2>
                 <span className="rounded-md bg-indigo-50 px-2 py-0.5 text-xs font-bold text-[#033399] border border-indigo-200">
                   {currentCase.intakeName}
+                </span>
+                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-600 border border-slate-200">
+                  Ảnh thẻ 3×4
                 </span>
               </div>
               <p className="mt-1 text-xs text-slate-600">
@@ -522,56 +544,67 @@ export default function CasesPage() {
               {currentCase.parents.map((p) => (
                 <div
                   key={p.parentId}
-                  className="rounded-lg bg-white p-2.5 border border-slate-200 shadow-2xs space-y-1 text-xs"
+                  className="rounded-lg bg-white p-3 border border-slate-200 shadow-2xs flex items-start gap-3 text-xs"
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
-                      <span
-                        className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
-                          p.relationship === 'BO'
-                            ? 'bg-blue-100 text-[#033399]'
-                            : 'bg-rose-100 text-rose-800'
-                        }`}
-                      >
-                        {p.relationLabel}
-                      </span>
-                      <strong className="text-slate-900">{p.fullName}</strong>
-                      <span className="text-slate-500 text-[11px]">({p.yearOfBirth})</span>
+                  <PhotoAvatar
+                    src={p.photoUrl}
+                    alt={p.fullName}
+                    aspectRatio="1:1"
+                    size="md"
+                    rounded="lg"
+                    fallbackType={p.relationship === 'BO' ? 'father' : 'mother'}
+                    className="border border-slate-200 shadow-2xs shrink-0 mt-0.5"
+                  />
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <span
+                          className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
+                            p.relationship === 'BO'
+                              ? 'bg-blue-100 text-[#033399]'
+                              : 'bg-rose-100 text-rose-800'
+                          }`}
+                        >
+                          {p.relationLabel}
+                        </span>
+                        <strong className="text-slate-900">{p.fullName}</strong>
+                        <span className="text-slate-500 text-[11px]">({p.yearOfBirth})</span>
+                      </div>
+
+                      {p.isFinancialSponsor && (
+                        <span className="rounded bg-emerald-50 border border-emerald-300 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800 shrink-0">
+                          ⭐ Bảo trợ chính
+                        </span>
+                      )}
                     </div>
 
-                    {p.isFinancialSponsor && (
-                      <span className="rounded bg-emerald-50 border border-emerald-300 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800">
-                        ⭐ Bảo trợ chính
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-slate-600">
+                      <span>
+                        SĐT:{' '}
+                        <a
+                          href={`tel:${p.phone.replace(/\s+/g, '')}`}
+                          className="font-mono font-bold text-[#033399] hover:underline"
+                          title="Bấm để gọi"
+                        >
+                          {p.phone}
+                        </a>
                       </span>
+                      <span>•</span>
+                      <span>Nghề: {p.job}</span>
+                    </div>
+
+                    {p.notes && (
+                      <p
+                        className={`text-[10px] mt-0.5 ${
+                          p.notes.includes('⚠️') || p.notes.includes('đôn đốc')
+                            ? 'text-rose-700 font-semibold bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200'
+                            : 'text-slate-500 italic'
+                        }`}
+                      >
+                        {p.notes}
+                      </p>
                     )}
                   </div>
-
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-slate-600">
-                    <span>
-                      SĐT:{' '}
-                      <a
-                        href={`tel:${p.phone.replace(/\s+/g, '')}`}
-                        className="font-mono font-bold text-[#033399] hover:underline"
-                        title="Bấm để gọi"
-                      >
-                        {p.phone}
-                      </a>
-                    </span>
-                    <span>•</span>
-                    <span>Nghề: {p.job}</span>
-                  </div>
-
-                  {p.notes && (
-                    <p
-                      className={`text-[10px] mt-0.5 ${
-                        p.notes.includes('⚠️') || p.notes.includes('đôn đốc')
-                          ? 'text-rose-700 font-semibold bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200'
-                          : 'text-slate-500 italic'
-                      }`}
-                    >
-                      {p.notes}
-                    </p>
-                  )}
                 </div>
               ))}
             </div>
