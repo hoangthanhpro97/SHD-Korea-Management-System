@@ -1,4 +1,4 @@
-import type { CaseByIntake, IntakeFlightPeriod, WeekStageId, DossierItem } from '../types/schema'
+import type { CaseByIntake, IntakeFlightPeriod, WeekStageId, DossierItem, ParentInfo } from '../types/schema'
 
 export const INTAKE_PERIODS_DATA: IntakeFlightPeriod[] = [
   {
@@ -1557,6 +1557,213 @@ export const CASES_BY_INTAKE_DATA: CaseByIntake[] = [
   }
 ]
 
+// Hàm tạo danh sách phụ huynh chi tiết & người bảo lãnh tài chính
+export function generateParentsForCase(studentCode: string, studentName: string): ParentInfo[] {
+  const specificMap: Record<string, ParentInfo[]> = {
+    'SHD2026-001': [
+      {
+        parentId: 'par_001_f',
+        fullName: 'Nguyễn Văn Thành',
+        relationship: 'BO',
+        relationLabel: 'Bố',
+        phone: '0913 567 890',
+        yearOfBirth: 1975,
+        job: 'Giám đốc Công ty TNHH Vận tải Thành Đạt',
+        workplace: 'KCN Đình Vũ, Hải Phòng',
+        address: 'Quận Ngô Quyền, Hải Phòng',
+        idCard: '031075001234',
+        isFinancialSponsor: true,
+        notes: 'Đứng tên Sổ tiết kiệm 1 tỷ VNĐ & Sao kê tài khoản doanh nghiệp'
+      },
+      {
+        parentId: 'par_001_m',
+        fullName: 'Lê Thị Hoa',
+        relationship: 'ME',
+        relationLabel: 'Mẹ',
+        phone: '0982 345 678',
+        yearOfBirth: 1978,
+        job: 'Kế toán trưởng',
+        workplace: 'Công ty CP May Hải Phòng',
+        address: 'Quận Ngô Quyền, Hải Phòng',
+        idCard: '031178005678',
+        isFinancialSponsor: false,
+        notes: 'Đầu mối phụ trách hồ sơ cư trú CT07 & giấy tờ nhân thân'
+      }
+    ],
+    'SHD2026-005': [
+      {
+        parentId: 'par_005_f',
+        fullName: 'Vũ Văn Dũng',
+        relationship: 'BO',
+        relationLabel: 'Bố',
+        phone: '0915 888 666',
+        yearOfBirth: 1976,
+        job: 'Chủ cơ sở chế biến gỗ mỹ nghệ & Hộ kinh doanh',
+        workplace: 'Làng nghề Đông Giao, Cẩm Giàng, Hải Dương',
+        address: 'Huyện Cẩm Giàng, Hải Dương',
+        idCard: '030076008899',
+        isFinancialSponsor: true,
+        notes: '⚠️ Cần đôn đốc chuyển tiền mở sổ đóng băng K-Study 10.000 USD'
+      },
+      {
+        parentId: 'par_005_m',
+        fullName: 'Hoàng Thị Lan',
+        relationship: 'ME',
+        relationLabel: 'Mẹ',
+        phone: '0974 999 111',
+        yearOfBirth: 1979,
+        job: 'Cán bộ Bưu điện huyện',
+        workplace: 'Bưu điện huyện Cẩm Giàng, Hải Dương',
+        address: 'Huyện Cẩm Giàng, Hải Dương',
+        idCard: '030179004455',
+        isFinancialSponsor: false,
+        notes: 'Đã hoàn thành xác nhận nhân thân và sổ hộ khẩu gia đình'
+      }
+    ],
+    'SHD2026-002': [
+      {
+        parentId: 'par_002_f',
+        fullName: 'Trần Quốc Tuấn',
+        relationship: 'BO',
+        relationLabel: 'Bố',
+        phone: '0903 222 333',
+        yearOfBirth: 1973,
+        job: 'Chủ hộ kinh doanh nông sản xuất khẩu',
+        workplace: 'Thị trấn Giao Thủy, Nam Định',
+        address: 'Huyện Giao Thủy, Nam Định',
+        idCard: '036073001122',
+        isFinancialSponsor: true,
+        notes: 'Đang xin cấp lại trích lục Sổ đỏ đất ở tại UBND huyện'
+      },
+      {
+        parentId: 'par_002_m',
+        fullName: 'Bùi Thị Thu',
+        relationship: 'ME',
+        relationLabel: 'Mẹ',
+        phone: '0984 333 444',
+        yearOfBirth: 1977,
+        job: 'Quản lý cửa hàng tạp hóa gia đình',
+        workplace: 'Thị trấn Giao Thủy, Nam Định',
+        address: 'Huyện Giao Thủy, Nam Định',
+        idCard: '036177003344',
+        isFinancialSponsor: false,
+        notes: 'Hỗ trợ nộp biên lai thuế môn bài các năm gần nhất'
+      }
+    ],
+    'SHD2026-004': [
+      {
+        parentId: 'par_004_f',
+        fullName: 'Phạm Hồng Sơn',
+        relationship: 'BO',
+        relationLabel: 'Bố',
+        phone: '0904 111 222',
+        yearOfBirth: 1972,
+        job: 'Sĩ quan công an hưu trí',
+        workplace: 'Công an tỉnh Nghệ An',
+        address: 'TP. Vinh, Nghệ An',
+        idCard: '040072009988',
+        isFinancialSponsor: true,
+        notes: 'Bảo lãnh tài chính chính, đầy đủ sổ hưu và sao kê ngân hàng'
+      },
+      {
+        parentId: 'par_004_m',
+        fullName: 'Nguyễn Thị Kim Oanh',
+        relationship: 'ME',
+        relationLabel: 'Mẹ',
+        phone: '0916 333 555',
+        yearOfBirth: 1976,
+        job: 'Giáo viên THPT Chuyên Phan Bội Châu',
+        workplace: 'TP. Vinh, Nghệ An',
+        address: 'TP. Vinh, Nghệ An',
+        idCard: '040176007766',
+        isFinancialSponsor: false,
+        notes: 'Người trao đổi trực tiếp lịch học tiếng và rèn luyện phỏng vấn'
+      }
+    ],
+    'SHD2026-003': [
+      {
+        parentId: 'par_003_f',
+        fullName: 'Lê Văn Khang',
+        relationship: 'BO',
+        relationLabel: 'Bố',
+        phone: '0918 456 789',
+        yearOfBirth: 1974,
+        job: 'Kỹ sư trưởng Công ty Xây dựng',
+        workplace: 'TP. Bắc Ninh, Bắc Ninh',
+        address: 'TP. Bắc Ninh, Bắc Ninh',
+        idCard: '027074001234',
+        isFinancialSponsor: true,
+        notes: 'Đã hoàn tất chứng minh thu nhập sao kê lương 35 triệu/tháng'
+      },
+      {
+        parentId: 'par_003_m',
+        fullName: 'Phạm Thanh Thảo',
+        relationship: 'ME',
+        relationLabel: 'Mẹ',
+        phone: '0988 789 123',
+        yearOfBirth: 1977,
+        job: 'Bác sĩ chuyên khoa',
+        workplace: 'Bệnh viện Đa khoa tỉnh Bắc Ninh',
+        address: 'TP. Bắc Ninh, Bắc Ninh',
+        idCard: '027177005678',
+        isFinancialSponsor: false,
+        notes: 'Phụ trách theo dõi sức khỏe và lịch tiêm chủng, khám lao'
+      }
+    ]
+  }
+
+  if (specificMap[studentCode]) {
+    return specificMap[studentCode]
+  }
+
+  const parts = studentName.replace(/\s*\(HV.*?\)/, '').trim().split(' ')
+  const surname = parts[0] || 'Nguyễn'
+  const middle = parts.length > 2 ? parts[1] : 'Văn'
+  const codeNum = studentCode.replace(/\D/g, '') || '100'
+  const baseSeed = parseInt(codeNum, 10)
+  const randomFatherYear = 1972 + (baseSeed % 8)
+  const randomMotherYear = randomFatherYear + 2 + (baseSeed % 3)
+  const phoneSuffix = String(100 + (baseSeed % 900)).padStart(3, '0')
+
+  return [
+    {
+      parentId: `par_${studentCode}_f`,
+      fullName: `${surname} ${middle} Hùng`,
+      relationship: 'BO',
+      relationLabel: 'Bố',
+      phone: `091${(baseSeed % 9) + 1} 456 ${phoneSuffix}`,
+      yearOfBirth: randomFatherYear,
+      job: 'Kinh doanh tự do / Hộ kinh doanh cá thể',
+      workplace: 'Cơ sở sản xuất & Thương mại gia đình',
+      address: 'Hải Dương / Hà Nội',
+      idCard: `0300${String(randomFatherYear).slice(2)}00${phoneSuffix}`,
+      isFinancialSponsor: true,
+      notes: 'Bảo trợ tài chính chính, đứng tên sổ đỏ nhà đất & tài sản bảo lãnh'
+    },
+    {
+      parentId: `par_${studentCode}_m`,
+      fullName: `Nguyễn Thị Thanh Loan`,
+      relationship: 'ME',
+      relationLabel: 'Mẹ',
+      phone: `098${((baseSeed + 3) % 9) + 1} 789 ${phoneSuffix}`,
+      yearOfBirth: randomMotherYear,
+      job: 'Cán bộ viên chức / Kế toán',
+      workplace: 'Đơn vị hành chính sự nghiệp địa phương',
+      address: 'Hải Dương / Hà Nội',
+      idCard: `0301${String(randomMotherYear).slice(2)}00${phoneSuffix}`,
+      isFinancialSponsor: false,
+      notes: 'Đầu mối liên hệ gia đình tiếp nhận thông báo tiến độ & học phí'
+    }
+  ]
+}
+
+// Tự động gán danh sách phụ huynh cho toàn bộ học viên có sẵn
+CASES_BY_INTAKE_DATA.forEach((c) => {
+  if (!c.parents || c.parents.length === 0) {
+    c.parents = generateParentsForCase(c.studentCode, c.studentName)
+  }
+})
+
 // Các hàm tiện ích truy xuất dữ liệu
 export function getIntakePeriodById(periodId: string): IntakeFlightPeriod | undefined {
   return INTAKE_PERIODS_DATA.find((p) => p.periodId === periodId)
@@ -1651,7 +1858,8 @@ export function getSimulatedCohortForPeriod(periodId: string, totalCount = 40): 
         phase1Paid: true,
         phase2Paid: false,
         phase3Paid: false
-      }
+      },
+      parents: generateParentsForCase(`SHD2027-${codeNum}`, name)
     })
   }
 

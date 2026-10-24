@@ -505,6 +505,79 @@ export default function CasesPage() {
           </div>
         </div>
 
+        {/* THÔNG TIN PHỤ HUYNH & NGƯỜI BẢO TRỢ TÀI CHÍNH */}
+        {currentCase.parents && currentCase.parents.length > 0 && (
+          <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-3 space-y-2">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/60 pb-2">
+              <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <span>👨‍👩‍👧</span>
+                <span>Thông tin Phụ huynh & Bảo trợ tài chính:</span>
+              </span>
+              <span className="text-[11px] text-slate-500">
+                Đầu mối liên hệ giải quyết hồ sơ & học phí gia đình
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {currentCase.parents.map((p) => (
+                <div
+                  key={p.parentId}
+                  className="rounded-lg bg-white p-2.5 border border-slate-200 shadow-2xs space-y-1 text-xs"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className={`rounded px-1.5 py-0.2 text-[10px] font-bold ${
+                          p.relationship === 'BO'
+                            ? 'bg-blue-100 text-[#033399]'
+                            : 'bg-rose-100 text-rose-800'
+                        }`}
+                      >
+                        {p.relationLabel}
+                      </span>
+                      <strong className="text-slate-900">{p.fullName}</strong>
+                      <span className="text-slate-500 text-[11px]">({p.yearOfBirth})</span>
+                    </div>
+
+                    {p.isFinancialSponsor && (
+                      <span className="rounded bg-emerald-50 border border-emerald-300 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800">
+                        ⭐ Bảo trợ chính
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-slate-600">
+                    <span>
+                      SĐT:{' '}
+                      <a
+                        href={`tel:${p.phone.replace(/\s+/g, '')}`}
+                        className="font-mono font-bold text-[#033399] hover:underline"
+                        title="Bấm để gọi"
+                      >
+                        {p.phone}
+                      </a>
+                    </span>
+                    <span>•</span>
+                    <span>Nghề: {p.job}</span>
+                  </div>
+
+                  {p.notes && (
+                    <p
+                      className={`text-[10px] mt-0.5 ${
+                        p.notes.includes('⚠️') || p.notes.includes('đôn đốc')
+                          ? 'text-rose-700 font-semibold bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200'
+                          : 'text-slate-500 italic'
+                      }`}
+                    >
+                      {p.notes}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* ======================================================== */}
         {/* LEVEL 3: KHUNG TIẾN ĐỘ 7 GIAI ĐOẠN THEO MỐC THỜI GIAN     */}
         {/* ======================================================== */}

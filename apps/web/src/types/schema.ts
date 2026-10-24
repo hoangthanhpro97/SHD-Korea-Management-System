@@ -155,6 +155,22 @@ export interface TrainingProgress {
   }
 }
 
+// Thông tin phụ huynh và người bảo lãnh tài chính
+export interface ParentInfo {
+  parentId: string
+  fullName: string
+  relationship: 'BO' | 'ME' | 'NGUOI_GIAM_HO'
+  relationLabel: string // 'Bố', 'Mẹ', 'Người bảo lãnh'
+  phone: string
+  yearOfBirth: string | number
+  job: string
+  workplace?: string
+  address?: string
+  idCard?: string
+  isFinancialSponsor: boolean // Người bảo trợ tài chính chính (đứng tên sổ đỏ / sổ tiết kiệm)
+  notes?: string
+}
+
 // Chi tiết học viên trong kỳ bay
 export interface CaseByIntake {
   caseId: string
@@ -175,6 +191,9 @@ export interface CaseByIntake {
 
   // Danh mục hồ sơ chi tiết theo 7 mốc tuần
   dossierItems: Record<WeekStageId, DossierItem[]>
+
+  // Danh sách phụ huynh / người bảo lãnh
+  parents?: ParentInfo[]
 
   // Thu phí dịch vụ
   paymentPhases: {
@@ -465,4 +484,5 @@ export interface Student {
   registeredDate: string
   gpa: number
   topikLevel: string
+  parents?: ParentInfo[]
 }
